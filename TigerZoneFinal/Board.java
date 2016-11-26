@@ -221,6 +221,7 @@ public class Board {
 	
 	public void printBoard()
 	{
+<<<<<<< HEAD
 		System.out.println("----------------");
 		for(int i=0; i<this.boardColumnNumber; i++){
 			for(int j=0; j<this.boardRowNumber; j++){
@@ -237,6 +238,86 @@ public class Board {
 			}
 		}
 		System.out.println("----------------");
+=======
+		String temp = "";
+		String sideInfoOne;
+		String sideInfoTwo;
+		for(int i = 0; i<this.boardRowNumber;i++){
+			for(int j = 0;j<this.boardColumnNumber;j++){
+				if(!this.tileArray[i][j]){
+					temp = temp+"|     |";
+				}
+				else{
+					switch(this.tileArray[i][j].terrainOnSide.up){
+						case "jungle" : sideInfoOne = "J"; break;
+						case "lake"	  : sideInfoOne = "L"; break;
+						case "game-trail": sideInfoOne = "G"; break;
+						default : sideInfoOne = "?";
+					}
+
+					temp = temp +"|  " + sideInfoOne + "  |";
+				}
+			}
+
+			System.out.println(temp);
+			temp = "";
+
+			for(int j = 0;j<this.boardColumnNumber;j++){
+				if(!this.tileArray[i][j]){
+					temp = temp+"|     |";
+				}
+				else{
+					switch(this.tileArray[i][j].terrainOnSide.left){
+						case "jungle" : sideInfoOne = "J"; break;
+						case "lake"	  : sideInfoOne = "L"; break;
+						case "game-trail": sideInfoOne = "G"; break;
+						default : sideInfoOne = "?";
+					}
+
+					switch(this.tileArray[i][j].terrainOnSide.right){
+						case "jungle" : sideInfoTwo = "J"; break;
+						case "lake"	  : sideInfoTwo = "L"; break;
+						case "game-trail": sideInfoTwo = "G"; break;
+						default : sideInfoTwo = "?";
+					}
+
+					temp = temp+"|"+sideInfoOne+"   "+sideInfoTwo+"|";
+
+					}
+			}
+
+			System.out.println(temp);
+			temp = "";
+
+			for(int j = 0;j<this.boardColumnNumber;j++){
+				if(!this.tileArray[i][j]){
+					temp = temp+"|     |";
+				}
+				else{
+					switch(this.tileArray[i][j].terrainOnSide.bottom){
+						case "jungle" : sideInfoOne = "J"; break;
+						case "lake"	  : sideInfoOne = "L"; break;
+						case "game-trail": sideInfoOne = "G"; break;
+						default : sideInfoOne = "?";
+					}
+
+					temp = temp +"|  " + sideInfoOne + "  |";
+				}
+
+			}
+
+			System.out.println(temp);
+			temp = "";
+
+			for(int j = 0;j<this.boardColumnNumber;j++){
+				temp = temp+"_______";
+
+			}
+
+			System.out.println(temp);
+			temp = "";
+		}
+>>>>>>> origin/master
 	}
 
 }
