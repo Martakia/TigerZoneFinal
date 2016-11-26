@@ -7,112 +7,118 @@ public class Card{
 	 TerrainOnSide terrainOnSide;
 	
 	// Special information
-	final boolean deer;
-	final boolean boar;
-	final boolean buffalo;
-	final boolean den;
-	final boolean lakesConnected;
-	final boolean junglesConnected;
-	final String CardCode;
+	 boolean deer;
+	 boolean boar;
+	 boolean buffalo;
+	 boolean den;
+	 boolean lakesConnected;
+	 boolean junglesConnected;
+	 boolean croc;
+	 String CardCode;
 	public String imagePath;//path to png files
 	
-	
-	Card(String code){
+	Card(String string){
 		
-		// TODO finish implementation
-		
-		// just placeholders TODO TODO TODO 
-		this.deer = false;
-		this.boar = false;
-		this.buffalo = false;
-		this.den = false;
-		this.lakesConnected = false;
-		this.junglesConnected = false;
-		this.CardCode = "TODO";
-		
+		this.CardCode = string;
+		terrainOnSide = new TerrainOnSide();
+		for(int i=0; i<string.length();i++){
+			// this.terrainOnSide = new TerrainOnSide(terrainUp, terrainRight, terrainBottom, terrainLeft);
+			if(i==0){
+				if(string.charAt(i) == 'J'){
+					this.terrainOnSide.up ="Jungle";
+				}
+				else if(string.charAt(i) == 'L'){
+					this.terrainOnSide.up ="Lake";
+				}
+				else if(string.charAt(i) == 'T'){
+					this.terrainOnSide.up = "Trail";
+				}
+			}
+			if(i==1){
+				if(string.charAt(i) == 'J'){
+					this.terrainOnSide.right = "Jungle";
+				}
+				else if(string.charAt(i) == 'L'){
+					this.terrainOnSide.right ="Lake";
+				}
+				else if(string.charAt(i) == 'T'){
+					this.terrainOnSide.right ="Trail";
+				}
+			}
+			if(i==2){
+				if(string.charAt(i) == 'J'){
+					this.terrainOnSide.bottom ="Jungle";
+				}
+				else if(string.charAt(i) == 'L'){
+					this.terrainOnSide.bottom ="Lake";
+				}
+				else if(string.charAt(i) == 'T'){
+					this.terrainOnSide.bottom ="Trail";
+				}
+			}
+			if(i==3){
+				if(string.charAt(i) == 'J'){
+					this.terrainOnSide.left ="Jungle";
+				}
+				else if(string.charAt(i) == 'L'){
+					this.terrainOnSide.left ="Lake";
+				}
+				else if(string.charAt(i) == 'T'){
+					this.terrainOnSide.left ="Trail";
+				}
+			}
+			if(i==4){
+				if( string.charAt(i) == '-'){
+					this.croc=false;
+					deer=false;
+					boar=false;
+					buffalo=false;
+					den=false;
+				}
+				else if(string.charAt(i) =='X'){
+					croc=false;
+					deer=false;
+					boar=false;
+					buffalo=false;
+					den=true;
+				}
+				else if(string.charAt(i) =='B'){
+					croc=false;
+					deer=false;
+					boar=false;
+					buffalo=true;
+					den=false;
+				}
+				else if(string.charAt(i) =='C'){
+					croc=true;
+					deer=false;
+					boar=false;
+					buffalo=false;
+					den=false;
+				}
+				else if(string.charAt(i) =='D'){
+					croc=false;
+					deer=true;
+					boar=false;
+					buffalo=false;
+					den=false;
+				}
+				else if(string.charAt(i) == 'P'){
+					croc=false;
+					deer=false;
+					boar=true;
+					buffalo=false;
+					den=false;
+				}
+			}
+		}
+		if(string.equals("LLLL-")||string.equals("JLLL-")||string.equals("LLJJ-")||string.equals("TLLT-")||string.equals("JLJL-")||string.equals("TLLTB")||string.equals("TLLL-")||string.equals("TLLLC")){
+			this.lakesConnected = true;
+		}
+		else if(string.equals("JJJJ-")||string.equals("JJJJX")||string.equals("JJTJX")||string.equals("LLJJ-")||string.equals("LJLJ-")||string.equals("TJJT-")||string.equals("LJJJ-")||string.equals("JLLJ-")){
+			this.junglesConnected = true;
+		}
 	}
-	
-	Card(String terrainUp, String terrainRight, String terrainBottom, String terrainLeft, 
-			boolean deer, boolean boar, boolean buffalo,boolean den, boolean lakesConnected,boolean junglesConnected)
-		{
-			this.terrainOnSide = new TerrainOnSide(terrainUp, terrainRight, terrainBottom, terrainLeft);
-			this.deer = deer;
-			this.boar = boar;
-			this.buffalo = buffalo;
-			this.den = den;
-			this.lakesConnected = lakesConnected;
-			this.junglesConnected = junglesConnected;
-
-			
-			
-			StringBuilder temp = new StringBuilder();
-			
-			// top-face
-				if(terrainUp.equals("jungle")){
-					temp.append("J");
-				}
-				else if(terrainUp.equals("lake")){
-					temp.append("L");
-				}
-				else {
-					temp.append("T");
-				}
-			
-			// right-face
-				if(terrainRight.equals("jungle")){
-					temp.append("J");
-				}
-				else if(terrainRight.equals("lake")){
-					temp.append("L");
-				}
-				else {
-					temp.append("T");
-				}
-			// bottom-face
-				if(terrainBottom.equals("jungle")){
-					temp.append("J");
-				}
-				else if(terrainBottom.equals("lake")){
-					temp.append("L");
-				}
-				else {
-					temp.append("T");
-				}
-			// left-face
-				if(terrainLeft.equals("jungle")){
-					temp.append("J");
-				}
-				else if(terrainLeft.equals("lake")){
-					temp.append("L");
-				}
-				else {
-					temp.append("T");
-				}
-			
-			// special codes
-				int specialCodes = 0;
-				if(deer){
-					temp.append("D");
-					specialCodes++;
-				}
-				if(boar){
-					temp.append("P");
-					specialCodes++;
-				}
-				if(buffalo){
-					temp.append("B");
-					specialCodes++;
-				}
-				if(den){
-					temp.append("X");
-					specialCodes++;
-				}			
-				if(specialCodes == 0){
-					temp.append("-");
-				}
-			
-			this.CardCode = temp.toString();
-}
 
 	public String returnCardInformation(){
 		StringBuilder response = new StringBuilder();
@@ -127,11 +133,6 @@ public class Card{
 			response.append(this.lakesConnected + " ");
 			response.append(this.junglesConnected);
 		return response.toString();
-	}
-
-	public void setPathToImage(String path)
-	{
-		imagePath = new String(path);//sets path to png files
 	}
 
 }

@@ -19,38 +19,19 @@ public class Tile extends Card {
 	final int row;
 	final int rotation;
 	boolean croc;
-	String imagePath;
 	boolean isPlacedOnBoard;
 	boolean wasRendered;// this thing helps gui to work well
 	
 	public int[] ownershipSections;
 	public String[] terrainSections;
 	public boolean[] placeableSections;
-	//	0	1	2						1	2	3
-	//	3	4	5	code  =	 rules doc	4	5	6
-	//	6	7	8						7	8	9
-	
-	// corners can consist of 2 terrains
-	// terrain of 0 = terrain of 1 + terrain of 3
-	// terrain of 2 = terrain of 1 + terrain of 5
-	// terrain of 8 = terrain of 5 + terrain of 7
-	// terrain of 6 - terrain of 3 + terrain of 7
-	
-	// the terrain of the center varies depending on if there is a den or not, 
-	// if the lakes or gametrails cross it, and what the terrains are for 1, 3, 5, and 7
-	
-	// ownership is set to 0 initial for each section, but is updated depending on the ownership of the
-	// neighbors. Ownership of the center (4) should be set to -1 in the case that it is an intersection
-	// of a game trail to make it reflect a dead end. 
-	// The terrain section type for this scenario will be end-trail.
+
 	
 	Tile(Card cardBeingPlaced, int rotation,int row,int column, boolean topNeighbor, boolean rightNeighbor, boolean bottomNeighbor, boolean leftNeighbor )
 	{
 
 		// original card information is stored in the parent class, what is on the board, is kept in this tile class
-		super(cardBeingPlaced.terrainOnSide.up, cardBeingPlaced.terrainOnSide.right, cardBeingPlaced.terrainOnSide.bottom, cardBeingPlaced.terrainOnSide.left,
-				cardBeingPlaced.deer, cardBeingPlaced.boar, cardBeingPlaced.buffalo ,cardBeingPlaced.den, cardBeingPlaced.lakesConnected, cardBeingPlaced.junglesConnected);
-		
+		super(cardBeingPlaced.CardCode);
 		this.ownershipSections = new int[9];		
 		this.terrainSections = new String[9];
 		this.placeableSections = new boolean[9];
@@ -84,14 +65,6 @@ public class Tile extends Card {
 													   cardBeingPlaced.terrainOnSide.up);
 		}
 		
-		//now to take care of the neighbors 
-		 Neighbors neighbors = new Neighbors(topNeighbor, rightNeighbor, bottomNeighbor, leftNeighbor);
-		
-		 // when Tile defined and declared it is not immediatly placed on the board
-		 this.isPlacedOnBoard = false;
-		 this.wasRendered = false;
-		 System.out.println(cardBeingPlaced.imagePath);
-		 this.imagePath=cardBeingPlaced.imagePath;
 	}
 
 	
@@ -384,10 +357,14 @@ public class Tile extends Card {
 }
 
 class TerrainOnSide{
-	final String up;
-	final String right;
-	final String bottom;
-	final String left;
+	public String up;
+	public String right;
+	public String bottom;
+	public String left;
+	
+	TerrainOnSide(){
+		
+	}
 	
 	TerrainOnSide(String up, String right, String bottom, String left){
 		this.up = up;
