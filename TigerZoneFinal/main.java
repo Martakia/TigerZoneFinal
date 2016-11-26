@@ -26,11 +26,14 @@ public class main{
             String fromUser = "";
             
             
-            
             // array that will store both of the games
             Game[] games = new Game[2];
-            int numberOfRounds = -0;
+            int numberOfRounds = -1;
             String opponent;
+            boolean firstMoveMade = false;
+            boolean secondMoveMade = false;
+            String gidOne = "";
+            String gidTwo = "";
 
             while ((fromServer = in.readLine()) != null) {
             	// Each of the responses will be constructed using a stringBuilder
@@ -82,6 +85,10 @@ public class main{
 	                  		Game gameTwo = new Game();
 	                  		games[0] = gameOne;
 	                  		games[1] = gameTwo;
+	                  	
+	                  	// reset booleans, keep track of gid at the very start of the game
+	             			firstMoveMade = false;
+	             			secondMoveMade = false;
                   	}
                   	else if(serverInfo[0].equals("YOUR") && serverInfo[1].equals("OPPONENT")){
                   		System.out.println("=== Opponent Player info ===");
@@ -115,7 +122,6 @@ public class main{
                   		games[0].deck.ImportCardData(rawCardData);
                   		games[1].deck.ImportCardData(rawCardData);
                   	}
-// TODO 
              		else if(serverInfo[0].equals("MATCH") && serverInfo[1].equals("BEGINS")){
              			System.out.println("=== Coutdown to start of match ===");
              			// match begins in specified time frame
@@ -125,10 +131,73 @@ public class main{
              			if(serverInfo[8].equals("SECOND")){
              				System.out.println("=== Make move with singular amount of time ===");
              				// move with singular amount of time
+             				String gameID = serverInfo[6];
+             				if(!firstMoveMade && !secondMoveMade){
+             					// called only at the start when we don't know the gid
+             					firstMoveMade = true;
+             					gidOne = gameID;
+             				} else if (!secondMoveMade){
+             					// called only when we have to make the second move
+             					secondMoveMade = true;
+             					gidTwo = gameID;
+             				} else {
+             					// not one of the first 2 moves
+             					PlayerMoveInformation info;
+             					Card cardToPlace = new Card(serverInfo[12]);
+             					
+             					if(gameID.equals(gidOne)){
+             						// make move for first game
+             						info = games[0].player.makeMove(cardToPlace);
+             					}
+             					else {
+             						// make move for second game
+             						info = games[1].player.makeMove(cardToPlace);
+             					}
+             					// 
+             					
+             					response.append("GAME " +gameID+ " MOVE " + serverInfo[7] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
+             					if(info.tigerPlaced){
+             						// tigerPlace is true
+             						response.append(" TIGER " + info.tigerLocation);
+             					}		
+             					fromUser = response.toString();
+             				}
+
              			}
              			else{
              				System.out.println("=== Make move with more time ===");
              				// SECONDS, multiple amounts of second
+             				String gameID = serverInfo[6];
+             				if(!firstMoveMade && !secondMoveMade){
+             					// called only at the start when we don't know the gid
+             					firstMoveMade = true;
+             					gidOne = gameID;
+             				} else if (!secondMoveMade){
+             					// called only when we have to make the second move
+             					secondMoveMade = true;
+             					gidTwo = gameID;
+             				} else {
+             					// not one of the first 2 moves
+             					PlayerMoveInformation info;
+             					Card cardToPlace = new Card(serverInfo[12]);
+             					
+             					if(gameID.equals(gidOne)){
+             						// make move for first game
+             						info = games[0].player.makeMove(cardToPlace);
+             					}
+             					else {
+             						// make move for second game
+             						info = games[1].player.makeMove(cardToPlace);
+             					}
+             					// 
+             					
+             					response.append("GAME " +gameID+ " MOVE " + serverInfo[7] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
+             					if(info.tigerPlaced){
+             						// tigerPlace is true
+             						response.append(" TIGER " + info.tigerLocation);
+             					}		
+             					fromUser = response.toString();
+             				}
 
              			}	
              		}
@@ -140,6 +209,29 @@ public class main{
              			else {
              				System.out.println("=== Valid move confirmed by server ===");
              				// valid move, do something
+             				Card card = new Card(serverInfo[7]);
+             				int xLocation = Integer.parseInt(serverInfo[9]);
+             				int yLocation = Integer.parseInt(serverInfo[10]);
+             				int rotation = Integer.parseInt(serverInfo[11]);
+             				boolean tigerPlaced = false;
+             				int tigerLocation = -1;
+             				if(serverInfo.length > 12){
+             					tigerPlaced = true;
+             					tigerLocation = Integer.parseInt(serverInfo[13]);
+             				}
+             				ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, xLocation, yLocation, rotation, tigerPlaced, tigerLocation);
+             				
+             				if(serverInfo[2].equals(gidOne)){
+             					// update info for Game 1
+             					games[0].board.udpateBoardFromServerResponse(updateInfo);
+             				}
+             				else {
+             					// update info for Game 2
+             					games[1].board.udpateBoardFromServerResponse(updateInfo);
+             				}
+             				
+             				
+             				
              			}
              		}
 // DONE
