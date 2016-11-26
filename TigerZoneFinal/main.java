@@ -131,7 +131,7 @@ public class main{
              			if(serverInfo[8].equals("SECOND")){
              				System.out.println("	=== Make move with singular amount of time ===");
              				// move with singular amount of time
-             				String gameID = serverInfo[6];
+             				String gameID = serverInfo[5];
              				if(!firstMoveMade && !secondMoveMade){
              					// called only at the start when we don't know the gid
              					firstMoveMade = true;
@@ -156,7 +156,7 @@ public class main{
 		             					}
 		             					// 
 		             					
-		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[7] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
+		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
 		             					if(info.tigerPlaced){
 		             						// tigerPlace is true
 		             						response.append(" TIGER " + info.tigerLocation);
@@ -168,7 +168,7 @@ public class main{
              			else{
              				System.out.println("	=== Make move with more time ===");
              				// SECONDS, multiple amounts of second
-             				String gameID = serverInfo[6];
+             				String gameID = serverInfo[5];
              				if(!firstMoveMade && !secondMoveMade){
              					// called only at the start when we don't know the gid
              					firstMoveMade = true;
@@ -193,7 +193,7 @@ public class main{
 		             					}
 		             					// 
 		             					
-		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[7] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
+		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
 		             					if(info.tigerPlaced){
 		             						// tigerPlace is true
 		             						response.append(" TIGER " + info.tigerLocation);
