@@ -21,7 +21,14 @@ public class Player {
 	{	
 	
 		// TODO implement
-		PlayerMoveInformation response = new PlayerMoveInformation(cardToPlace, 0,0,0,false,0);
+		ArrayList<PlacementPossibility> stuff = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
+		int random = (int)(Math.random()*stuff.size());
+		
+		System.out.println("random is " +random);	
+		PlayerMoveInformation response = new PlayerMoveInformation(cardToPlace,stuff.get(random).column, stuff.get(random).row, stuff.get(random).rotation,false,0);
+		
+		// now update local version of board before sending out the response 
+		this.localVersionOfBoard.updateBoard(response);
 		return response;
 	}
 	

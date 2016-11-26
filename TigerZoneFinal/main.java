@@ -121,6 +121,14 @@ public class main{
                   		// Give copies of both of the decks to both of the games 
                   		games[0].deck.ImportCardData(rawCardData);
                   		games[1].deck.ImportCardData(rawCardData);
+                  		
+                  		// give copies of boards to each player
+                  		games[0].player.giveBoardToPlayer(games[0].board);
+                  		games[1].player.giveBoardToPlayer(games[1].board);
+                  		
+                  		// give copies of the decks to both the players
+                  		games[0].player.giveDeckToPlayer(rawCardData);
+                  		games[1].player.giveDeckToPlayer(rawCardData);
                   	}
              		else if(serverInfo[0].equals("MATCH") && serverInfo[1].equals("BEGINS")){
              			System.out.println("	=== Coutdown to start of match ===");
@@ -155,8 +163,8 @@ public class main{
 		             						info = games[1].player.makeMove(cardToPlace);
 		             					}
 		             					// 
-		             					
-		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
+		             					int subtract = games[0].board.boardColumnNumber/2;
+		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation);
 		             					if(info.tigerPlaced){
 		             						// tigerPlace is true
 		             						response.append(" TIGER " + info.tigerLocation);
@@ -192,8 +200,8 @@ public class main{
 		             						info = games[1].player.makeMove(cardToPlace);
 		             					}
 		             					// 
-		             					
-		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + info.column + " "  +info.row + " " +info.orientation);
+		             					int subtract = games[0].board.boardColumnNumber/2;
+		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  + (info.row-subtract) + " " +info.orientation);
 		             					if(info.tigerPlaced){
 		             						// tigerPlace is true
 		             						response.append(" TIGER " + info.tigerLocation);
@@ -229,8 +237,7 @@ public class main{
              				else {
              					// update info for Game 2
              					games[1].board.udpateBoardFromServerResponse(updateInfo);
-             				}	
-             				
+             				}	 				
              			}
              		}
 // DONE

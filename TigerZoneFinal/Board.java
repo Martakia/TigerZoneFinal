@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 import java.util.*;
@@ -45,13 +44,15 @@ public class Board {
 	void placeFirstCard(String cardCode, int xLocation, int yLocation, int rotation)
 	{
 		// create card for the information that was given and then create the tile
-		Card card = new Card(cardCode);
-		Tile tile = new Tile(card, rotation, xLocation, yLocation, false, false, false, false);
+		Card card = new Card(cardCode); 
+		Tile tile = new Tile(card, rotation, xLocation+(int)boardColumnNumber/2 , yLocation+ (int)boardRowNumber/2, false, false, false, false);
 		
 		// position the tile at the starting location and then mark it off as existing
-		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2] = tile;
-		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2].isPlacedOnBoard = true;
-		this.tileTracker[(int)boardRowNumber/2][(int)boardColumnNumber/2] = true;
+		this.tileArray[(int)boardColumnNumber/2][(int)boardRowNumber/2] = tile;
+		this.tileArray[(int)boardColumnNumber/2][(int)boardRowNumber/2].isPlacedOnBoard = true;
+		this.tileTracker[(int)boardColumnNumber/2][(int)boardRowNumber/2] = true;
+		
+		this.findEmptyTilesAround(xLocation+(int)boardColumnNumber/2 , yLocation+ (int)boardRowNumber/2);
 	}
 
 	public ArrayList<PlacementPossibility> generatePossibleCardPlacements(Card card)//here  we generate possible placment
@@ -59,6 +60,8 @@ public class Board {
 //		System.out.println(tileArray[77][77].finalPlacedOrientation.up+tileArray[77][77].finalPlacedOrientation.right+tileArray[77][77].finalPlacedOrientation.bottom+tileArray[77][77].finalPlacedOrientation.left);
 		ArrayList<PlacementPossibility> possibilities = new ArrayList<PlacementPossibility>();	
 
+		this.printBoard();
+		
 		for(int q=0; q<this.possiblePlacementTracker.size(); q++)//first we go trough vector that holds coordinates of all tiles adjaecent to tiles that we already placed
 		{		
 			
@@ -125,14 +128,41 @@ public class Board {
 					}					
 			}	
 		}
+		
+		System.out.println(possibilities.size());
 		return possibilities;
 	}
 	
 
-	/* this method is called by the other player who is not currently making a move to update their board
-	after the server returns a response, the response informaition contains info regarding what the other player
-	just did, where their card was placed, orientation etc. 
-	*/
+	public void updateBoard(PlayerMoveInformation response){
+		boolean northNeighbor = false;
+		boolean eastNeighbor = false;
+		boolean southNeighbor = false;
+		boolean westNeighbor = false;
+		if(this.tileTracker[response.column][response.row+1] == true){
+			northNeighbor = true;
+		}
+		if(this.tileTracker[response.column+1][response.row] == true){
+			eastNeighbor = true;
+		}
+		if(this.tileTracker[response.column][response.row-1] == true){
+			southNeighbor = true;
+		}
+		if(this.tileTracker[response.column-1][response.row+1] == true){
+			westNeighbor = true;
+		}	
+		
+		Tile tile = new Tile(response.card, response.column, response.row, response.orientation, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
+		
+		// mark as placed with tileTracker array
+		this.tileTracker[response.column][response.row] = true;
+
+		// now position new tile and mark it off as set
+		this.tileArray[response.column][response.row] = tile;
+		this.tileArray[response.column][response.row].isPlacedOnBoard = true;
+	}
+	
+	
 	public void udpateBoardFromServerResponse(ServerMoveValidationResponse response){
 
 		boolean northNeighbor = false;
@@ -189,7 +219,25 @@ public class Board {
 		}
 	}
 	
+	public void printBoard()
+	{
+		System.out.println("----------------");
+		for(int i=0; i<this.boardColumnNumber; i++){
+			for(int j=0; j<this.boardRowNumber; j++){
+				if(this.tileTracker[i][j] == true){
+					System.out.println("--------");
+					System.out.println("| " + this.tileArray[i][j].CardCode + " |");
+					System.out.println("--------");
+					System.out.print(this.tileArray[i][j].column );
+					System.out.print(this.tileArray[i][j].row );
+				}
+				else{
+					
+				}
+			}
+		}
+		System.out.println("----------------");
+	}
 
 }
-
 
