@@ -7,7 +7,6 @@ public class Board {
 	public Boolean tileWasRendered[][]; //row/column, upper left corner is 0 0
 	public int boardColumnNumber;
 	public int boardRowNumber;	
-	public volatile int test;//for testing multithreading 
 	public Tile centralTile;
 	
 	public volatile Vector<Coordinates> possiblePlacementTracker; /*this vector updates each move to keep coordinates
@@ -41,187 +40,115 @@ public class Board {
 
 		System.out.println("CHECKPOINT: Board Initialization complete");
 	}
-	void placeFirstCard(String cardCode, int xLocation, int yLocation, int rotation)
+	void placeFirstCard(String cardCode, int row, int column, int rotation)
 	{
 		// create card for the information that was given and then create the tile
 		Card card = new Card(cardCode); 
-		Tile tile = new Tile(card, rotation, xLocation+(int)boardColumnNumber/2 , yLocation+ (int)boardRowNumber/2, false, false, false, false);
+		Tile tile = new Tile(card, rotation, (row+(int)boardColumnNumber/2) , (column+ (int)boardRowNumber/2), false, false, false, false);
 		
 		// position the tile at the starting location and then mark it off as existing
-		this.tileArray[(int)boardColumnNumber/2][(int)boardRowNumber/2] = tile;
-		this.tileArray[(int)boardColumnNumber/2][(int)boardRowNumber/2].isPlacedOnBoard = true;
-		this.tileTracker[(int)boardColumnNumber/2][(int)boardRowNumber/2] = true;
-		
-		this.findEmptyTilesAround(xLocation+(int)boardColumnNumber/2 , yLocation+ (int)boardRowNumber/2);
+		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2] = tile;
+		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2].isPlacedOnBoard = true;
+		this.tileTracker[(int)boardRowNumber/2][(int)boardColumnNumber/2] = true;
+	
 	}
 
-	public ArrayList<PlacementPossibility> generatePossibleCardPlacements(Card card)//here  we generate possible placment
+	public ArrayList<PlacementPossibility> generatePossibleCardPlacements(Card card)
 	{
-//		System.out.println(tileArray[77][77].finalPlacedOrientation.up+tileArray[77][77].finalPlacedOrientation.right+tileArray[77][77].finalPlacedOrientation.bottom+tileArray[77][77].finalPlacedOrientation.left);
 		ArrayList<PlacementPossibility> possibilities = new ArrayList<PlacementPossibility>();	
 
-		this.printBoard();
+		// TODO copy over code to find possibilities on board of where to place a card
 		
-		for(int q=0; q<this.possiblePlacementTracker.size(); q++)//first we go trough vector that holds coordinates of all tiles adjaecent to tiles that we already placed
-		{		
-			
-			int row = this.possiblePlacementTracker.get(q).row;
-			int column = this.possiblePlacementTracker.get(q).column;				
-			//we form arrays of terrain names to make work with them more convenient
-			String adjecentSides [] = new String [4];//this terrain around current card
-			String currentSides [] = new String [4];//this terrain of current card
-			
-			for(int k=0;k<4;k++)
-			{
-				adjecentSides[k]=new String("");
-				currentSides[k]=new String("");
-			}
-			
-			currentSides [0] = card.terrainOnSide.up;
-			currentSides [1] = card.terrainOnSide.right;
-			currentSides [2] = card.terrainOnSide.bottom;
-			currentSides [3] = card.terrainOnSide.left;
-			
-			// now check each of the 4 neighbors to see that the sides match up
-			if(row>0)//get side above current row/column position
-			{
-				if(tileTracker[row-1][column])
-				{
-					adjecentSides [0]=tileArray[row-1][column].finalPlacedOrientation.bottom;					
-				}
-			}
 
-			if(column<boardColumnNumber-1)//get side on right from current row/column position
-			{
-				if(tileTracker[row][column+1])
-				{
-					adjecentSides [1]=tileArray[row][column+1].finalPlacedOrientation.left;						
-				}
-			}
+		return possibilities;
+	}
 
-			if(row<boardRowNumber-1)//get side below current row/column position
-			{
-				if(tileTracker[row+1][column])
-				{
-					adjecentSides [2]=tileArray[row+1][column].finalPlacedOrientation.up;					
-				}
-			}
+	public ArrayList<Integer> generatePossibleTigerPlacements(int row, int column){
+		ArrayList<Integer> possibilities = new ArrayList<Integer>();
 
-			if(column>0)//get side on left from current row/column position
-			{
-				if(tileTracker[row][column-1])
-				{
-					adjecentSides [3]=tileArray[row][column-1].finalPlacedOrientation.right;
-				}
-			}		
+		// TODO copy over code to find possible TigerPlacements 
 
-			// TODO verify that Tiger placement is valid, as of the moment only checks positions and neighbors
-			for(int k=0;k<4;k++)
-			{
-				if(	(currentSides[(0+k)%4].equals(adjecentSides[0])||adjecentSides[0].equals(""))&&
-					(currentSides[(1+k)%4].equals(adjecentSides[1])||adjecentSides[1].equals(""))&&
-					(currentSides[(2+k)%4].equals(adjecentSides[2])||adjecentSides[2].equals(""))&&
-					(currentSides[(3+k)%4].equals(adjecentSides[3])||adjecentSides[3].equals("")))					
-					{
-						PlacementPossibility tmp = new PlacementPossibility(row,column,k);//if terrains mutch we store data about position and rotation
-						possibilities.add(tmp);							
-					}					
-			}	
-		}
-		
-		System.out.println(possibilities.size());
+
 		return possibilities;
 	}
 	
 
 	public void updateBoard(PlayerMoveInformation response){
+		// when player makes move, coordinates are already 0-155 so no need to add 77 to each one to get middle index
 		boolean northNeighbor = false;
 		boolean eastNeighbor = false;
 		boolean southNeighbor = false;
 		boolean westNeighbor = false;
-		if(this.tileTracker[response.column][response.row+1] == true){
+		if(this.tileTracker[response.row+1][response.column] == true){
 			northNeighbor = true;
 		}
-		if(this.tileTracker[response.column+1][response.row] == true){
+		if(this.tileTracker[response.row][response.column+1] == true){
 			eastNeighbor = true;
 		}
-		if(this.tileTracker[response.column][response.row-1] == true){
+		if(this.tileTracker[response.row-1][response.column] == true){
 			southNeighbor = true;
 		}
-		if(this.tileTracker[response.column-1][response.row+1] == true){
+		if(this.tileTracker[response.row][response.column-1] == true){
 			westNeighbor = true;
 		}	
 		
-		Tile tile = new Tile(response.card, response.column, response.row, response.orientation, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
+		Tile tile = new Tile(response.card, response.row, response.column, response.orientation, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
 		
 		// mark as placed with tileTracker array
-		this.tileTracker[response.column][response.row] = true;
+		this.tileTracker[response.row][response.column] = true;
 
 		// now position new tile and mark it off as set
-		this.tileArray[response.column][response.row] = tile;
-		this.tileArray[response.column][response.row].isPlacedOnBoard = true;
+		this.tileArray[response.row][response.column] = tile;
+		this.tileArray[response.row][response.column].isPlacedOnBoard = true;
 	}
 	
 	
 	public void udpateBoardFromServerResponse(ServerMoveValidationResponse response){
 
+		// responses come back 0 indexed while our board 0 is represented by 77 
+		int add = (this.boardRowNumber/2);
+
 		boolean northNeighbor = false;
 		boolean eastNeighbor = false;
 		boolean southNeighbor = false;
 		boolean westNeighbor = false;
-		if(this.tileTracker[response.xLocation][response.yLocation+1] == true){
+		if(this.tileTracker[response.row+1+add][response.column+add] == true){
 			northNeighbor = true;
 		}
-		if(this.tileTracker[response.xLocation+1][response.yLocation] == true){
+		if(this.tileTracker[response.row+add][response.column+1+add] == true){
 			eastNeighbor = true;
 		}
-		if(this.tileTracker[response.xLocation][response.yLocation-1] == true){
+		if(this.tileTracker[response.row-1+add][response.column+add] == true){
 			southNeighbor = true;
 		}
-		if(this.tileTracker[response.xLocation-1][response.yLocation+1] == true){
+		if(this.tileTracker[response.row+add][response.column-1+add] == true){
 			westNeighbor = true;
 		}	
 
-		Tile tileToPlace = new Tile(response.card, response.xLocation, response.yLocation, response.cardOrientation, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
+		Tile tileToPlace = new Tile(response.card, response.cardOrientation, response.row+add, response.column+add, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
 
 		// mark as placed with tileTracker array
-		this.tileTracker[response.xLocation][response.yLocation] = true;
+		this.tileTracker[response.row+add][response.column+add] = true;
 
 		// now position new tile and mark it off as set
-		this.tileArray[response.xLocation][response.yLocation] = tileToPlace;
-		this.tileArray[response.xLocation][response.yLocation].isPlacedOnBoard = true;
+		this.tileArray[response.row+add][response.column+add] = tileToPlace;
+		this.tileArray[response.row+add][response.column+add].isPlacedOnBoard = true;
 
 	}
 
-	public void findEmptyTilesAround(int row, int column)/*looks for empty tiles around tile with coordinates
-															row and column and updates possiblePlacementTracker
-															with new values*/
-	{
-		if(row+1<boardRowNumber)
-		{
-			if(!tileTracker[row+1][column])
-				possiblePlacementTracker.add(new Coordinates(row+1,column));
-		}	
-		if(column+1<boardRowNumber)
-		{
-			if(!tileTracker[row][column+1])
-				possiblePlacementTracker.add(new Coordinates(row,column+1));
-		}
-		if(row-1>=0)
-		{
-			if(!tileTracker[row-1][column])
-				possiblePlacementTracker.add(new Coordinates(row-1,column));
-		}
-		if(column-1>=0)
-		{
-			if(!tileTracker[row][column-1])
-				possiblePlacementTracker.add(new Coordinates(row,column-1));
-		}
+	public void removeEnemyTiger(int row, int column){
+
+		// TODO implement, this is the response we get back from the server
 	}
 	
+
+	public void addEnemyTiger(int row, int column){
+
+		// TODO implement, this is the response we get back from the server
+	}
+
 	public void printBoard()
 	{
-<<<<<<< HEAD
 		System.out.println("----------------");
 		for(int i=0; i<this.boardColumnNumber; i++){
 			for(int j=0; j<this.boardRowNumber; j++){
@@ -238,86 +165,7 @@ public class Board {
 			}
 		}
 		System.out.println("----------------");
-=======
-		String temp = "";
-		String sideInfoOne;
-		String sideInfoTwo;
-		for(int i = 0; i<this.boardRowNumber;i++){
-			for(int j = 0;j<this.boardColumnNumber;j++){
-				if(!this.tileArray[i][j]){
-					temp = temp+"|     |";
-				}
-				else{
-					switch(this.tileArray[i][j].terrainOnSide.up){
-						case "jungle" : sideInfoOne = "J"; break;
-						case "lake"	  : sideInfoOne = "L"; break;
-						case "game-trail": sideInfoOne = "G"; break;
-						default : sideInfoOne = "?";
-					}
 
-					temp = temp +"|  " + sideInfoOne + "  |";
-				}
-			}
-
-			System.out.println(temp);
-			temp = "";
-
-			for(int j = 0;j<this.boardColumnNumber;j++){
-				if(!this.tileArray[i][j]){
-					temp = temp+"|     |";
-				}
-				else{
-					switch(this.tileArray[i][j].terrainOnSide.left){
-						case "jungle" : sideInfoOne = "J"; break;
-						case "lake"	  : sideInfoOne = "L"; break;
-						case "game-trail": sideInfoOne = "G"; break;
-						default : sideInfoOne = "?";
-					}
-
-					switch(this.tileArray[i][j].terrainOnSide.right){
-						case "jungle" : sideInfoTwo = "J"; break;
-						case "lake"	  : sideInfoTwo = "L"; break;
-						case "game-trail": sideInfoTwo = "G"; break;
-						default : sideInfoTwo = "?";
-					}
-
-					temp = temp+"|"+sideInfoOne+"   "+sideInfoTwo+"|";
-
-					}
-			}
-
-			System.out.println(temp);
-			temp = "";
-
-			for(int j = 0;j<this.boardColumnNumber;j++){
-				if(!this.tileArray[i][j]){
-					temp = temp+"|     |";
-				}
-				else{
-					switch(this.tileArray[i][j].terrainOnSide.bottom){
-						case "jungle" : sideInfoOne = "J"; break;
-						case "lake"	  : sideInfoOne = "L"; break;
-						case "game-trail": sideInfoOne = "G"; break;
-						default : sideInfoOne = "?";
-					}
-
-					temp = temp +"|  " + sideInfoOne + "  |";
-				}
-
-			}
-
-			System.out.println(temp);
-			temp = "";
-
-			for(int j = 0;j<this.boardColumnNumber;j++){
-				temp = temp+"_______";
-
-			}
-
-			System.out.println(temp);
-			temp = "";
-		}
->>>>>>> origin/master
 	}
 
 }

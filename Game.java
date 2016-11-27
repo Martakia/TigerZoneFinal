@@ -4,8 +4,6 @@ public class Game {
 	Player player;
 	Board board;
 	Deck deck;
-	ArrayList<PlacementPossibility>possibilities;
-	
 	
 	//creates players, deck and board that belong to this instance of the game
 	public Game() 
@@ -14,10 +12,7 @@ public class Game {
 		this.deck = new Deck();
 		this.player = new Player();
 		this.board = new Board();
-	}
-
-
-	
+	}	
 	
 }
 

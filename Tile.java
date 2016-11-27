@@ -356,24 +356,6 @@ public class Tile extends Card {
 	
 }
 
-class TerrainOnSide{
-	public String up;
-	public String right;
-	public String bottom;
-	public String left;
-	
-	TerrainOnSide(){
-		
-	}
-	
-	TerrainOnSide(String up, String right, String bottom, String left){
-		this.up = up;
-		this.right = right;
-		this.bottom = bottom;
-		this.left = left;
-	}
-}
-
 class MeepleSlots
 {
 	int den;

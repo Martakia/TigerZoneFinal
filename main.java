@@ -136,8 +136,8 @@ public class main{
              			
              		}
              		else if(serverInfo[0].equals("MAKE") && serverInfo[1].equals("YOUR")){
-             			if(serverInfo[8].equals("SECOND")){
-             				System.out.println("	=== Make move with singular amount of time ===");
+// MAKING A MOVE
+             				System.out.println("	=== Make move ===");
              				// move with singular amount of time
              				String gameID = serverInfo[5];
              				if(!firstMoveMade && !secondMoveMade){
@@ -164,80 +164,122 @@ public class main{
 		             					}
 		             					// 
 		             					int subtract = games[0].board.boardColumnNumber/2;
-		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation);
-		             					if(info.tigerPlaced){
-		             						// tigerPlace is true
-		             						response.append(" TIGER " + info.tigerLocation);
-		             					}		
+
+                                                      if(info.unplaceable){
+                                                            // generate responses
+                                                            response.append("GAME " + serverInfo[10] + " TILE " +serverInfo[12] + " UNPLACEABLE ");
+                                                            if(info.pass){
+                                                                  // just pass, do nothing special
+                                                                  response.append("PASS");
+                                                            } else if(info.retrieve){
+                                                                  // retrieve tiger
+                                                                  response.append("RETRIEVE TIGER AT " + info.extraColumn + " " +info.extraRow);
+                                                            } else if(info.another){
+                                                                  // add another tiger
+                                                                   response.append("ADD ANOTHER TIGER TO " + info.extraColumn + " " +info.extraRow);
+                                                            }
+
+                                                      }
+                                                      else{
+                                                            response.append("GAME " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation);
+                                                            if(info.tigerPlaced){
+                                                                  // tigerPlace is true
+                                                                  response.append(" TIGER " + info.tigerLocation);
+                                                            }
+                                                            else if(info.crocodile){
+                                                                  response.append(" CROCODILE");
+                                                            } 
+                                                            else{
+                                                                  // nothing special to add
+                                                            }
+                                                      }		
 		             					fromUser = response.toString();
              				
-
-             			}
-             			else{
-             				System.out.println("	=== Make move with more time ===");
-             				// SECONDS, multiple amounts of second
-             				String gameID = serverInfo[5];
-             				if(!firstMoveMade && !secondMoveMade){
-             					// called only at the start when we don't know the gid
-             					firstMoveMade = true;
-             					gidOne = gameID;
-             				} else if (!secondMoveMade){
-             					// called only when we have to make the second move
-             					secondMoveMade = true;
-             					gidTwo = gameID;
-             				} else {
-             					// not one of the first 2 moves
-             				}
-		             					PlayerMoveInformation info;
-		             					Card cardToPlace = new Card(serverInfo[12]);
-		             					
-		             					if(gameID.equals(gidOne)){
-		             						// make move for first game
-		             						info = games[0].player.makeMove(cardToPlace);
-		             					}
-		             					else {
-		             						// make move for second game
-		             						info = games[1].player.makeMove(cardToPlace);
-		             					}
-		             					// 
-		             					int subtract = games[0].board.boardColumnNumber/2;
-		             					response.append("GAME " +gameID+ " MOVE " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  + (info.row-subtract) + " " +info.orientation);
-		             					if(info.tigerPlaced){
-		             						// tigerPlace is true
-		             						response.append(" TIGER " + info.tigerLocation);
-		             					}		
-		             					fromUser = response.toString();
-
-             			}	
              		}
+// RESPONDING TO MOVE INFORMATION
              		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("MOVE")){
-             			if(serverInfo.length > 7){
+             			if(serverInfo[6].equals("FORFEITED")){
              				System.out.println("	=== Forfiet game ===");
              				// forfeit 
              			} 
              			else {
-             				System.out.println("	=== Valid move confirmed by server ===");
-             				// valid move, do something
-             				Card card = new Card(serverInfo[7]);
-             				int xLocation = Integer.parseInt(serverInfo[9]);
-             				int yLocation = Integer.parseInt(serverInfo[10]);
-             				int rotation = Integer.parseInt(serverInfo[11]);
-             				boolean tigerPlaced = false;
-             				int tigerLocation = -1;
-             				if(serverInfo.length > 12){
-             					tigerPlaced = true;
-             					tigerLocation = Integer.parseInt(serverInfo[13]);
-             				}
-             				ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, xLocation, yLocation, rotation, tigerPlaced, tigerLocation);
-             				
-             				if(serverInfo[2].equals(gidOne)){
-             					// update info for Game 1
-             					games[0].board.udpateBoardFromServerResponse(updateInfo);
-             				}
-             				else {
-             					// update info for Game 2
-             					games[1].board.udpateBoardFromServerResponse(updateInfo);
-             				}	 				
+                                    if(serverInfo[6].equals("TILE")){
+                                          // TILE response
+                                          if(serverInfo[9].equals("PASSED")){
+                                                // do nothing, passed
+                                          } else if (serverInfo[9].equals("RETRIEVED")){
+                                                // Player retrieved Tiger at some coordinate
+
+                                                // must subtract tiger from some location
+                                                int column =Integer.parseInt(serverInfo[12]);
+                                                int row =Integer.parseInt(serverInfo[13]);
+                                                String cardCode = serverInfo[7];
+                                                // remove tiger from board
+                                                      if(serverInfo[2].equals(gidOne)){
+                                                            // update info for Game 1
+                                                            games[0].board.removeEnemyTiger(row, column);
+                                                      }
+                                                      else {
+                                                            // update info for Game 2
+                                                            games[1].board.removeEnemyTiger(row, column);
+                                                      }   
+
+                                          } else if (serverInfo[9].equals("ADDED")){
+                                                // Player adds tiger to the board at some location
+                                                int column =Integer.parseInt(serverInfo[12]);
+                                                int row =Integer.parseInt(serverInfo[13]);
+                                                String cardCode = serverInfo[7];
+                                                // add tiger to board 
+                                                      if(serverInfo[2].equals(gidOne)){
+                                                            // update for Game 1
+                                                            games[0].board.addEnemyTiger(row, column);
+                                                      }
+                                                      else {
+                                                            // update for Game 2
+                                                            games[1].board.addEnemyTiger(row, column);
+                                                      }   
+
+                                          } else{
+                                                // shouldn't happen
+                                                System.out.println("error");
+                                          }
+                                    }
+                                    else{
+                                          // must be PLACED 
+                                                      System.out.println("    === Valid move confirmed by server ===");
+                                                      // valid move, do something
+                                                      Card card = new Card(serverInfo[7]);
+                                                      int xLocation = Integer.parseInt(serverInfo[9]);
+                                                      int yLocation = Integer.parseInt(serverInfo[10]);
+                                                      int rotation = Integer.parseInt(serverInfo[11]);
+                                                      boolean tigerPlaced = false;
+                                                      boolean crocodilePlaced = false;
+                                                      int tigerLocation = -1;
+                                                      if(serverInfo[12].equals("NONE")){
+                                                            // splendid, do nothing
+                                                      } else if(serverInfo[12].equals("CROCODILE")){
+                                                            crocodilePlaced = true;
+                                                      } else if(serverInfo[12].equals("TIGER")){
+                                                            tigerPlaced = true;
+                                                            tigerLocation = Integer.parseInt(serverInfo[13]);
+                                                      } else{
+                                                            // should not happen
+                                                            System.out.println("error");
+                                                      }
+
+                                                      // row = ylocation
+                                                      // column = xlocation
+                                                      ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, yLocation, xLocation, rotation, tigerPlaced, tigerLocation, crocodilePlaced);
+                                                      
+                                                      if(serverInfo[2].equals(gidOne)){
+                                                            // update info for Game 1
+                                                            games[0].board.udpateBoardFromServerResponse(updateInfo);
+                                                      }
+                                                      else {
+                                                            // update info for Game 2
+                                                            games[1].board.udpateBoardFromServerResponse(updateInfo);
+                                                      }     
+                                    }
              			}
              		}
 // DONE

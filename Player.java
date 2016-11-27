@@ -20,15 +20,27 @@ public class Player {
 	public PlayerMoveInformation makeMove(Card cardToPlace)
 	{	
 	
-		// TODO implement
+		// Method that will return the possible locations of the tiles that can be placed
 		ArrayList<PlacementPossibility> stuff = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
+		
+		// at this point the AI picks a random tile out of the available options 
 		int random = (int)(Math.random()*stuff.size());
-		
 		System.out.println("random is " +random);	
-		PlayerMoveInformation response = new PlayerMoveInformation(cardToPlace,stuff.get(random).column, stuff.get(random).row, stuff.get(random).rotation,false,0);
-		
-		// now update local version of board before sending out the response 
-		this.localVersionOfBoard.updateBoard(response);
+
+		PlayerMoveInformation response;
+			if(stuff.size() == 0){
+				// there are no possibilities, we have to default to the UNPLACEABLE RESPONSE
+
+				// this is the PASS response
+				 response = new PlayerMoveInformation(cardToPlace,0, 0, 0,false,0, false,true, true, false, false, 0,0);
+			}
+			else{
+				// TODO implement random choice of picking tiger location, right now set to false
+				 response = new PlayerMoveInformation(cardToPlace,stuff.get(random).column, stuff.get(random).row, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
+				
+				// now update local version of board before sending out the response 
+				this.localVersionOfBoard.updateBoard(response);
+			}
 		return response;
 	}
 	

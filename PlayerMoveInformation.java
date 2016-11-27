@@ -1,14 +1,4 @@
 
-
-/* this class will contain all the information that each player will make during a turn including
-- where to place card
-- orientation
-- if meaple placed
-- where meeple is placed if true
-
-
-this information will be what each player will send to the sever when it is their turn and they have decided where to move 
-*/
 public class PlayerMoveInformation {
 
 	// first 3 handle the position of the card, and its orientation
@@ -16,18 +6,31 @@ public class PlayerMoveInformation {
 	final public int row;
 	final public int column;
 	final public int orientation;
-	// last 3 variables handle the meeple information
 	final public boolean tigerPlaced;
 	final public int tigerLocation;
-// TODO some variables to store where the Tigers were placed
+	final public boolean crocodile;
+	final public boolean unplaceable;
+	final public boolean pass;
+	final public boolean retrieve;
+	final public boolean another;
+	final public int extraRow;
+	final public int extraColumn;
+
 	
-	public PlayerMoveInformation(Card card, int row, int column, int orientation, boolean tigerPlaced, int tigerLocation){
+	public PlayerMoveInformation(Card card, int row, int column, int orientation, boolean tigerPlaced, int tigerLocation, boolean crocodile, boolean unplaceable, boolean pass, boolean retrieve, boolean another, int extraRow, int extraColumn){
 		this.card = card;
 		this.row = row;
 		this.column = column;
 		this.orientation = orientation;
 		this.tigerPlaced = tigerPlaced;
 		this.tigerLocation = tigerLocation;
+		this.crocodile = crocodile;
+		this.unplaceable = unplaceable;
+		this.pass = pass;
+		this.retrieve = retrieve;
+		this.another = another;
+		this.extraRow = extraRow;
+		this.extraColumn = extraColumn;
 	}
 
 }
