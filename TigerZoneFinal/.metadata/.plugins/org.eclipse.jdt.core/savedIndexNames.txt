@@ -1,2 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Ana\Documents\GitHub\TigerZoneNew\.metadata\.plugins\org.eclipse.jdt.core
-2532231409.index
