@@ -7,13 +7,20 @@ import java.net.*;
 public class main{
 
 	// this will connect to the host that Dave specifies the day of the competition, as well as the port 
-	final static String hostName = "192.168.1.149";
-	final static int portNumber = 4444;
-	final static String tournamentPassword = "PersiaRocks";
-	final static String username = "Red";
-	final static String password = "Obiwan77";
+	 static String hostName; 
+	 static int portNumber;
+	 static String tournamentPassword;  
+	 static String username;
+	 static String password;
 	
 	public static void main(String args[]){
+
+
+            hostName = args[0];
+            portNumber = Integer.parseInt(args[1]);
+            tournamentPassword = args[2];
+            username = args[3];
+            password = args[4];
 
 		// In the main, the connection is established to the domain and port number specified
         try (
@@ -167,7 +174,7 @@ public class main{
 
                                                       if(info.unplaceable){
                                                             // generate responses
-                                                            response.append("GAME " + serverInfo[10] + " TILE " +serverInfo[12] + " UNPLACEABLE ");
+                                                            response.append("GAME " + serverInfo[5] + " MOVE " +  serverInfo[10] + " TILE " +serverInfo[12] + " UNPLACEABLE ");
                                                             if(info.pass){
                                                                   // just pass, do nothing special
                                                                   response.append("PASS");
@@ -181,7 +188,7 @@ public class main{
 
                                                       }
                                                       else{
-                                                            response.append("GAME " + serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation);
+                                                            response.append("GAME " + serverInfo[5] + " MOVE " +  serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation);
                                                             if(info.tigerPlaced){
                                                                   // tigerPlace is true
                                                                   response.append(" TIGER " + info.tigerLocation);

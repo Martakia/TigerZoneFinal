@@ -52,13 +52,215 @@ public class Board {
 		this.tileTracker[(int)boardRowNumber/2][(int)boardColumnNumber/2] = true;
 	
 	}
-
 	public ArrayList<PlacementPossibility> generatePossibleCardPlacements(Card card)
 	{
 		ArrayList<PlacementPossibility> possibilities = new ArrayList<PlacementPossibility>();	
 
-		// TODO copy over code to find possibilities on board of where to place a card
-		
+		ArrayList<Coordinates> checkLocations = new ArrayList<Coordinates>();
+
+		// check 4 sides to see if there is a neighboring tile that is placed
+
+		for(int i=1; i<this.boardRowNumber-1; i++){
+			for(int j=1; j<this.boardColumnNumber-1; j++){
+
+				boolean adjacent = false;
+
+				//tileTracker [row][column] => [i][j]
+				if(tileTracker[i+1][j]){
+					// check above
+					adjacent = true;
+				}
+				if(tileTracker[i-1][j]){
+					// check below
+					adjacent = true;
+				}
+				if(tileTracker[i][j+1]){
+					// check right
+					adjacent = true;
+				}
+				if(tileTracker[i][j-1]){
+					// check left
+					adjacent = true;
+				}
+
+				// if a tile exists already at the location then we don't want to calculate it
+				if(tileTracker[i][j]){
+					adjacent = false;
+					System.out.println("ONE");
+				}
+				if(adjacent){
+					// create coordinate to analyze later
+					Coordinates toAdd = new Coordinates(i,j);
+					checkLocations.add(toAdd);
+				}
+			}
+		}
+		// now with the possible locations, we check the 4 sides at each of the 4 rotations to see if it could work
+
+
+			System.out.println(card.terrainOnSide.up);
+			System.out.println(card.terrainOnSide.right);
+			System.out.println(card.terrainOnSide.bottom);
+			System.out.println(card.terrainOnSide.left);
+
+		for(int i=0; i<checkLocations.size(); i++){
+			// itterate through each of the possible points rotations the current card and checking if 4 sides match up
+			Coordinates verify = checkLocations.get(i);
+
+
+
+
+			boolean rotation0 = true;
+			boolean rotation1 = true;
+			boolean rotation2 = true;
+			boolean rotation3 = true;
+			
+			if(!tileTracker[verify.row+1][verify.column]){
+				// no neighbor above to check
+			} else {
+				// with 0 rotation
+				if(card.terrainOnSide.up == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+					// valid
+				} else {
+					rotation0 = false;
+				}
+
+				// 90 clockwise
+				if(card.terrainOnSide.left == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+					// valid 
+				} else {
+					rotation1 = false;
+				}
+
+				// 180 clockwise rotation
+				if(card.terrainOnSide.bottom == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+					// valid
+				} else {
+					rotation2 = false;
+				}
+
+				// 90 counterclockwise
+				if(card.terrainOnSide.right == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+					// valid 
+				} else {
+					rotation3 = false;
+				}
+
+			}
+
+			if(!tileTracker[verify.row][verify.column+1]){
+				// no neighbor to the right
+			} else {
+				// with 0 rotation
+				if(card.terrainOnSide.right == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+					// valid
+				} else {
+					rotation0 = false;
+				}
+
+				// with 90 clockwise
+				if(card.terrainOnSide.bottom == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+					// valid
+				} else {
+					rotation1 = false;
+				}
+
+				// 180 clockwise rotation
+				if(card.terrainOnSide.left == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+					// valid
+				} else {
+					rotation2 = false;
+				}
+
+				// with 90 counter
+				if(card.terrainOnSide.up == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+					// valid
+				} else {
+					rotation3 = false;
+				}
+			}
+
+			if(!tileTracker[verify.row-1][verify.column]){
+				// no neighbor below
+			} else {
+				// with 0 rotation
+				if(card.terrainOnSide.bottom == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+					// valid
+				} else {
+					rotation0 = false;
+				}
+				// 90 clockwise
+				if(card.terrainOnSide.left == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+					// valid
+				} else {
+					rotation1 = false;
+				}
+				// 180 rotation
+				if(card.terrainOnSide.up == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+					// valid
+				} else {
+					rotation2 = false;
+				}
+				// 90 counterclockwise
+				if(card.terrainOnSide.right == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+					// valid
+				} else {
+					rotation3 = false;
+				}
+
+			}
+
+
+			if(!tileTracker[verify.row][verify.column-1]){
+				// no neighbor to the left
+			} else {
+				// with 0 rotation
+				if(card.terrainOnSide.left == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+					// valid
+				} else {
+					rotation0 = false;
+				}
+				// with 90 clockwise
+				if(card.terrainOnSide.up == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+					// valid
+				} else {
+					rotation1 = false;
+				}
+				// with 180 rotation
+				if(card.terrainOnSide.right == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+					// valid
+				} else {
+					rotation2 = false;
+				}
+				// with 90 counterclockwise
+				if(card.terrainOnSide.bottom == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+					// valid
+				} else {
+					rotation3 = false;
+				}
+
+			}
+
+			// now if any of the combinations exist, they are still marked as true we add it to the possibilites
+			if(rotation0){
+				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 0);
+				possibilities.add(addMe);
+			}
+			if(rotation1){ // 1 == 90 clockwise
+				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 1);
+				possibilities.add(addMe);
+			}
+			if(rotation2){ // 2 == 180
+				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 2);
+				possibilities.add(addMe);
+			}
+			if(rotation3){ // 3 == 90 counterclockwise
+				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 3);
+				possibilities.add(addMe);
+			}
+		}
+
+
 
 		return possibilities;
 	}

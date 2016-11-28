@@ -23,6 +23,12 @@ public class Player {
 		// Method that will return the possible locations of the tiles that can be placed
 		ArrayList<PlacementPossibility> stuff = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
 		
+		System.out.println("number of possibilities is " + stuff.size());
+		for(int i=0; i<stuff.size(); i++){
+			System.out.println(stuff.get(i).row + " " + stuff.get(i).column + " " + stuff.get(i).rotation );
+		}
+
+
 		// at this point the AI picks a random tile out of the available options 
 		int random = (int)(Math.random()*stuff.size());
 		System.out.println("random is " +random);	

@@ -17,30 +17,10 @@ public class Card{
 	public String CardCode;
 	public String imagePath;//path to png files
 
-	class TerrainOnSide{
-		String up;
-		String right;
-		String left;
-		String bottom;
-
-		TerrainOnSide(){
-			this.up = "";
-			this.right = "";
-			this.bottom = "";
-			this.left = "";
-		}
-		TerrainOnSide(String up, String right, String bottom, String left){
-			this.up = up;
-			this.right = right;
-			this.bottom = bottom;
-			this.left = left;
-		}
-	}
-
 
 	Card(String string){
 		
-		this.CardCode = string;
+				this.CardCode = string;
 		this.terrainOnSide = new TerrainOnSide();
 		
 		if(string.charAt(0) == 'J'){
@@ -53,6 +33,8 @@ public class Card{
 		}
 		else if(string.charAt(0) == 'T'){
 			this.terrainOnSide.up = "game-trail";
+		} else{
+
 		}
 			
 			
@@ -64,6 +46,8 @@ public class Card{
 		}
 		else if(string.charAt(1) == 'T'){
 			this.terrainOnSide.right ="game-trail";
+		} else{
+
 		}
 		
 			
@@ -75,6 +59,8 @@ public class Card{
 		}
 		else if(string.charAt(2) == 'T'){
 			this.terrainOnSide.bottom ="game-trail";
+		} else{
+
 		}
 		
 			
@@ -86,6 +72,8 @@ public class Card{
 		}
 		else if(string.charAt(3) == 'T'){
 			this.terrainOnSide.left ="game-trail";
+		} else{
+
 		}
 			
 			
@@ -130,6 +118,8 @@ public class Card{
 			this.boar=true;
 			this.buffalo=false;
 			this.den=false;
+		} else{
+
 		}
 			
 		
@@ -172,6 +162,9 @@ public class Card{
 		else if(string.equals("JLLJ-")) this.imagePath = "26.png";
 		else if(string.equals("TLLL-")) this.imagePath = "27.png";
 		else if(string.equals("TLLLC")) this.imagePath = "28.png";
+		else{
+
+		}
 
 	}
 	
@@ -253,7 +246,7 @@ public class Card{
 				}
 			
 			this.CardCode = temp.toString();
-}
+	}
 
 	public String returnCardInformation(){
 		StringBuilder response = new StringBuilder();
@@ -277,4 +270,25 @@ public class Card{
 
 }
 
+class TerrainOnSide{
+		String up;
+		String right;
+		String left;
+		String bottom;
+
+		TerrainOnSide(){
+			this.up = "";
+			this.right = "";
+			this.bottom = "";
+			this.left = "";
+		}
+		TerrainOnSide(String up, String right, String bottom, String left){
+			this.up = up;
+			this.right = right;
+			this.bottom = bottom;
+			this.left = left;
+		}
+
+
+}
 
