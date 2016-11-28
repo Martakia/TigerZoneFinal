@@ -8,9 +8,8 @@ public class Player {
 	public int tigerCount;
 	public int crocCount;
 
-	public boolean prioritizeDen;
-	public int denRow;
-	public int denColumn;
+	public boolean denPriority;
+	public int x, y;
 	
 	Player()
 	{
@@ -64,9 +63,9 @@ public class Player {
 				this.localVersionOfBoard.updateBoard(response);
 
 				// now we want to prioritize placing a tiles around the tile that has the den 
-				this.prioritizeDen = true;
-				this.denRow = stuff.get(random).row;
-				this.denColumn = stuff.get(random).column;
+				this.denPriority = true;
+				this.x = stuff.get(random).row;
+				this.y= stuff.get(random).column;
 			}
 			else if(!firstMoveMade){
 				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,1,false, false, false, false, false, 0,0);
@@ -81,6 +80,30 @@ public class Player {
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
 				this.crocCount--;
+			}
+			else if(denPriority) {
+				ArrayList<PlacementPossibility> denPossibilities = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
+
+				for(int i = 1; i < denPossibilities.size(); i++) {
+					if(x+1 == denPossibilities.get(i).row && y == denPossibilities.get(i).column) {
+						//this.localVersionOfBoard[x+1][y] = cardToPlace;
+						response = new PlayerMoveInformation(cardToPlace, x+1, y, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+					}
+					else if(x-1 == denPossibilities.get(i).row && y == denPossibilities.get(i).column) {
+						//this.localVersionOfBoard[x-1][y] = cardToPlace;
+						response = new PlayerMoveInformation(cardToPlace, x-1, y, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+					}
+					else if(x == denPossibilities.get(i).row && y+1 == denPossibilities.get(i).column) {
+						//this.localVersionOfBoard[x][y+1] = cardToPlace;
+						response = new PlayerMoveInformation(cardToPlace, x, y+1, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+					}
+					else if(x == denPossibilities.get(i).row && y-1 == denPossibilities.get(i).column) {
+						//this.localVersionOfBoard[x][y-1] = cardToPlace;
+						response = new PlayerMoveInformation(cardToPlace, x, y-1, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+					}
+				}
+
+				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 			}
 			else{
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
