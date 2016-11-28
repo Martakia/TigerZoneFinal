@@ -343,11 +343,11 @@ public class Tile extends Card {
 		   (super.terrainOnSide.bottom.equals("game-trail") && super.terrainOnSide.left.equals("game-trail")) ||
 		   (super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.left.equals("game-trail")))
 		{
-			this.terrainSections[4] = "end-trail";
+			this.terrainSections[4] = "game-trail";
 		}
 		
 		else if(jungleCount == 4){
-			this.terrainSections[4] = "end-trail";
+			this.terrainSections[4] = "jungle";
 		}
 		
 		

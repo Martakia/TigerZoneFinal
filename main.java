@@ -114,7 +114,7 @@ public class main{
                   			int yLocation = Integer.parseInt(serverInfo[6]);
                   			int rotation = (Integer.parseInt(serverInfo[7]))/90;
 
-                                    startingX = xLocation;
+                                    startingX = xLocation;  
                                     startingY = yLocation;
 
                   		// place the first tile on the board
@@ -289,11 +289,11 @@ public class main{
                                                       
                                                       if(serverInfo[2].equals(gidOne)){
                                                             // update info for Game 1
-                                                            games[0].board.udpateBoardFromServerResponse(updateInfo);
+                                                            games[0].player.localVersionOfBoard.udpateBoardFromServerResponse(updateInfo);
                                                       }
                                                       else {
                                                             // update info for Game 2
-                                                            games[1].board.udpateBoardFromServerResponse(updateInfo);
+                                                            games[1].player.localVersionOfBoard.udpateBoardFromServerResponse(updateInfo);
                                                       }     
                                     }
              			}

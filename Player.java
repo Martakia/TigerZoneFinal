@@ -7,6 +7,10 @@ public class Player {
 	boolean firstMoveMade;
 	public int tigerCount;
 	public int crocCount;
+
+	public boolean prioritizeDen;
+	public int denRow;
+	public int denColumn;
 	
 	Player()
 	{
@@ -54,10 +58,15 @@ public class Player {
 				 response = new PlayerMoveInformation(cardToPlace,0, 0, 0,false,0, false,true, true, false, false, 0,0);
 			}
 			else if(denOnCard && (this.tigerCount>0)){
-				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
+				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
 				this.tigerCount--;
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
+
+				// now we want to prioritize placing a tiles around the tile that has the den 
+				this.prioritizeDen = true;
+				this.denRow = stuff.get(random).row;
+				this.denColumn = stuff.get(random).column;
 			}
 			else if(!firstMoveMade){
 				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,1,false, false, false, false, false, 0,0);
@@ -74,7 +83,6 @@ public class Player {
 				this.crocCount--;
 			}
 			else{
-				// TODO implement random choice of picking tiger location, right now set to false
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
 				
 				// now update local version of board before sending out the response 

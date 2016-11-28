@@ -15,7 +15,8 @@ public class Board {
 	public volatile Vector<Coordinates> actualPlacementTracker; /*this vector updates each turn and o keep coordinates
 	 												of tiles that are placed. It exists to avoid going through 
 	 												tileArray 155*155 array too often*/
-	
+	ArrayList<TigerInformation> tigerLocations;
+
 	Board()
 	{
 		this.boardColumnNumber = 155;
@@ -38,6 +39,7 @@ public class Board {
 			}
 		}	
 
+		tigerLocations = new ArrayList<TigerInformation>();
 		System.out.println("CHECKPOINT: Board Initialization complete");
 	}
 	void placeFirstCard(String cardCode, int row, int column, int rotation)
@@ -295,8 +297,19 @@ public class Board {
 		// now position new tile and mark it off as set
 		this.tileArray[response.row][response.column] = tile;
 		this.tileArray[response.row][response.column].isPlacedOnBoard = true;
+
+		if(response.tigerPlaced){
+			// tiger has been placed, we need to keep track of it
+			TigerInformation addInfo = new TigerInformation(response.row, response.column, response.tigerLocation);
+			tigerLocations.add(addInfo);
+		}
+		
 	}
 	
+
+	public ArrayList<TigerInformation> returnTigersPlaced(){
+		return this.tigerLocations;
+	}
 	
 	public void udpateBoardFromServerResponse(ServerMoveValidationResponse response){
 
@@ -328,6 +341,12 @@ public class Board {
 		// now position new tile and mark it off as set
 		this.tileArray[response.row+add][response.column+add] = tileToPlace;
 		this.tileArray[response.row+add][response.column+add].isPlacedOnBoard = true;
+
+		if(response.tigerPlaced){
+			// tiger has been added, we need to keep track of it
+			TigerInformation addInfo = new TigerInformation(response.row, response.column, response.tigerLocation);
+			tigerLocations.add(addInfo);
+		}
 
 	}
 
