@@ -112,28 +112,30 @@ public class Board {
 				// no neighbor above to check
 			} else {
 				// with 0 rotation
-				if(card.terrainOnSide.up == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+				if(card.terrainOnSide.up.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid
 				} else {
 					rotation0 = false;
 				}
 
 				// 90 clockwise
-				if(card.terrainOnSide.right == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+
+
+				if(card.terrainOnSide.left.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid 
 				} else {
 					rotation1 = false;
 				}
 
 				// 180 clockwise rotation
-				if(card.terrainOnSide.bottom == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+				if(card.terrainOnSide.bottom.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid
 				} else {
 					rotation2 = false;
 				}
 
 				// 90 counterclockwise
-				if(card.terrainOnSide.left == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+				if(card.terrainOnSide.right.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid 
 				} else {
 					rotation3 = false;
@@ -145,28 +147,28 @@ public class Board {
 				// no neighbor to the right
 			} else {
 				// with 0 rotation
-				if(card.terrainOnSide.right == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+				if(card.terrainOnSide.right.equals(tileArray[verify.row][verify.column+1].finalPlacedOrientation.left)){
 					// valid
 				} else {
 					rotation0 = false;
 				}
 
 				// with 90 clockwise
-				if(card.terrainOnSide.bottom == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+				if(card.terrainOnSide.bottom.equals(tileArray[verify.row][verify.column+1].finalPlacedOrientation.left)){
 					// valid
 				} else {
 					rotation1 = false;
 				}
 
 				// 180 clockwise rotation
-				if(card.terrainOnSide.left == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+				if(card.terrainOnSide.left.equals(tileArray[verify.row][verify.column+1].finalPlacedOrientation.left)){
 					// valid
 				} else {
 					rotation2 = false;
 				}
 
 				// with 90 counter
-				if(card.terrainOnSide.up == tileArray[verify.row][verify.column+1].finalPlacedOrientation.left){
+				if(card.terrainOnSide.up.equals(tileArray[verify.row][verify.column+1].finalPlacedOrientation.left)){
 					// valid
 				} else {
 					rotation3 = false;
@@ -177,25 +179,25 @@ public class Board {
 				// no neighbor below
 			} else {
 				// with 0 rotation
-				if(card.terrainOnSide.bottom == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+				if(card.terrainOnSide.bottom.equals(tileArray[verify.row-1][verify.column].finalPlacedOrientation.up)){
 					// valid
 				} else {
 					rotation0 = false;
 				}
 				// 90 clockwise
-				if(card.terrainOnSide.left == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+				if(card.terrainOnSide.left.equals(tileArray[verify.row-1][verify.column].finalPlacedOrientation.up)){
 					// valid
 				} else {
 					rotation1 = false;
 				}
 				// 180 rotation
-				if(card.terrainOnSide.up == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+				if(card.terrainOnSide.up.equals(tileArray[verify.row-1][verify.column].finalPlacedOrientation.up)){
 					// valid
 				} else {
 					rotation2 = false;
 				}
 				// 90 counterclockwise
-				if(card.terrainOnSide.right == tileArray[verify.row-1][verify.column].finalPlacedOrientation.up){
+				if(card.terrainOnSide.right.equals(tileArray[verify.row-1][verify.column].finalPlacedOrientation.up)){
 					// valid
 				} else {
 					rotation3 = false;
@@ -208,25 +210,25 @@ public class Board {
 				// no neighbor to the left
 			} else {
 				// with 0 rotation
-				if(card.terrainOnSide.left == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+				if(card.terrainOnSide.left.equals(tileArray[verify.row][verify.column-1].finalPlacedOrientation.right)){
 					// valid
 				} else {
 					rotation0 = false;
 				}
 				// with 90 clockwise
-				if(card.terrainOnSide.up == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+				if(card.terrainOnSide.up.equals(tileArray[verify.row][verify.column-1].finalPlacedOrientation.right)){
 					// valid
 				} else {
 					rotation1 = false;
 				}
 				// with 180 rotation
-				if(card.terrainOnSide.right == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+				if(card.terrainOnSide.right.equals(tileArray[verify.row][verify.column-1].finalPlacedOrientation.right)){
 					// valid
 				} else {
 					rotation2 = false;
 				}
 				// with 90 counterclockwise
-				if(card.terrainOnSide.bottom == tileArray[verify.row][verify.column-1].finalPlacedOrientation.right){
+				if(card.terrainOnSide.bottom.equals(tileArray[verify.row][verify.column-1].finalPlacedOrientation.right)){
 					// valid
 				} else {
 					rotation3 = false;
