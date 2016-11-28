@@ -112,7 +112,7 @@ public class main{
                   			String cardCode = serverInfo[3];
                   			int xLocation = Integer.parseInt(serverInfo[5]);
                   			int yLocation = Integer.parseInt(serverInfo[6]);
-                  			int rotation = Integer.parseInt(serverInfo[7]);
+                  			int rotation = (Integer.parseInt(serverInfo[7]))/90;
 
                                     startingX = xLocation;
                                     startingY = yLocation;

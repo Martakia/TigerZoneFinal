@@ -65,6 +65,14 @@ public class Player {
 				this.localVersionOfBoard.updateBoard(response);
 				firstMoveMade = true;
 			}
+			else if(((cardToPlace.deer || cardToPlace.boar || cardToPlace.buffalo) && cardToPlace.croc == false) && (this.crocCount > 0)) {
+
+				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,true, false, false, false, false, 0,0);
+				
+				// now update local version of board before sending out the response 
+				this.localVersionOfBoard.updateBoard(response);
+				this.crocCount--;
+			}
 			else{
 				// TODO implement random choice of picking tiger location, right now set to false
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
