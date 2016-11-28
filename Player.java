@@ -49,7 +49,8 @@ public class Player {
 		}
 
 
-		PlayerMoveInformation response;
+		PlayerMoveInformation response = null;
+
 			if(stuff.size() == 0){
 				// there are no possibilities, we have to default to the UNPLACEABLE RESPONSE
 
@@ -84,26 +85,34 @@ public class Player {
 			else if(denPriority) {
 				ArrayList<PlacementPossibility> denPossibilities = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
 
+				boolean solutionFound = false;
+
 				for(int i = 1; i < denPossibilities.size(); i++) {
 					if(x+1 == denPossibilities.get(i).row && y == denPossibilities.get(i).column) {
 						//this.localVersionOfBoard[x+1][y] = cardToPlace;
+						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, x+1, y, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 					}
 					else if(x-1 == denPossibilities.get(i).row && y == denPossibilities.get(i).column) {
+						solutionFound = true;
 						//this.localVersionOfBoard[x-1][y] = cardToPlace;
 						response = new PlayerMoveInformation(cardToPlace, x-1, y, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 					}
 					else if(x == denPossibilities.get(i).row && y+1 == denPossibilities.get(i).column) {
+						solutionFound = true;
 						//this.localVersionOfBoard[x][y+1] = cardToPlace;
 						response = new PlayerMoveInformation(cardToPlace, x, y+1, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 					}
 					else if(x == denPossibilities.get(i).row && y-1 == denPossibilities.get(i).column) {
+						solutionFound = true;
 						//this.localVersionOfBoard[x][y-1] = cardToPlace;
 						response = new PlayerMoveInformation(cardToPlace, x, y-1, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 					}
 				}
-
-				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+					if(!solutionFound){
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+					}
+				
 			}
 			else{
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
@@ -111,6 +120,7 @@ public class Player {
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
 			}
+
 		return response;
 	}
 	
