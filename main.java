@@ -177,7 +177,7 @@ public class main{
 		             						info = games[1].player.makeMove(cardToPlace);
 		             					}
 		             					// 
-		             					int subtract = (games[0].board.boardColumnNumber/2) +1;
+		             					int subtract = (games[0].board.boardColumnNumber/2);
 
                                                       if(info.unplaceable){
                                                             // generate responses

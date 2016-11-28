@@ -1,5 +1,3 @@
-
-
 public class Tile extends Card {
 	
 	/* each card that is on the tile maintains its ORIGINAL Terrain information in base Card class as well 
@@ -83,97 +81,94 @@ public class Tile extends Card {
 			case "jungle" :
 				jungleCount++;
 				this.terrainSections[1] = "jungle";
-				this.meepleSlots.gameTrailUp = -1;
+				
 				break;
 			case "lake" :
 				lakeCount++;
 				this.terrainSections[1] = "lake";
-				this.meepleSlots.gameTrailUp = -1;
+				
 				break;
 			case "game-trail" :
 				gameTrailCount++;
 				this.terrainSections[1] = "game-trail";
-				this.meepleSlots.gameTrailUp = 0;
+				
 				break;
 			default :
 				System.out.println("unable to identify terrain type on card");
 		}
 		
-	switch(super.terrainOnSide.right){
-		case "jungle" :
-			jungleCount++;
-			this.terrainSections[5] = "jungle";
-			this.meepleSlots.gameTrailRight = -1;
-			break;
-		case "lake" :
-			lakeCount++;
-			this.terrainSections[5] = "lake";
-			this.meepleSlots.gameTrailRight = -1;
-			break;
-		case "game-trail" :
-			gameTrailCount++;
-			this.terrainSections[5] = "game-trail";
-			this.meepleSlots.gameTrailRight = 0;
-			break;
-		default :
-			System.out.println("unable to identify terrain type on card");
-	}
+		switch(super.terrainOnSide.right){
+			case "jungle" :
+				jungleCount++;
+				this.terrainSections[5] = "jungle";
+			
+				break;
+			case "lake" :
+				lakeCount++;
+				this.terrainSections[5] = "lake";
+			
+				break;
+			case "game-trail" :
+				gameTrailCount++;
+				this.terrainSections[5] = "game-trail";
+			
+				break;
+			default :
+				System.out.println("unable to identify terrain type on card");
+		}
 		
-	switch(super.terrainOnSide.left){
-		case "jungle" :
-			jungleCount++;
-			this.terrainSections[3] = "jungle";
-			this.meepleSlots.gameTrailLeft = -1;
-			break;
-		case "lake" :
-			lakeCount++;
-			this.terrainSections[3] = "lake";
-			this.meepleSlots.gameTrailLeft = -1;
-			break;
-		case "game-trail" :
-			gameTrailCount++;
-			this.terrainSections[3] = "game-trail";
-			this.meepleSlots.gameTrailLeft = 0;
-			break;
-		default :
-			System.out.println("unable to identify terrain type on card");
-	}
+		switch(super.terrainOnSide.left){
+			case "jungle" :
+				jungleCount++;
+				this.terrainSections[3] = "jungle";
+			
+				break;
+			case "lake" :
+				lakeCount++;
+				this.terrainSections[3] = "lake";
+			
+				break;
+			case "game-trail" :
+				gameTrailCount++;
+				this.terrainSections[3] = "game-trail";
+			
+				break;
+			default :
+				System.out.println("unable to identify terrain type on card");
+		}
 		
-	switch(super.terrainOnSide.bottom){
-		case "jungle" :
-			jungleCount++;
-			this.terrainSections[7] = "jungle";
-			this.meepleSlots.gameTrailBottom = -1;
-			break;
-		case "lake" :
-			lakeCount++;
-			this.terrainSections[7] = "lake";
-			this.meepleSlots.gameTrailBottom = -1;
-			break;
-		case "game-trail" :
-			gameTrailCount++;
-			this.terrainSections[7] = "game-trail";
-			this.meepleSlots.gameTrailBottom = 0;
-			break;
-		default :
-			System.out.println("unable to identify terrain type on card");
-	}
+		switch(super.terrainOnSide.bottom){
+			case "jungle" :
+				jungleCount++;
+				this.terrainSections[7] = "jungle";
+			
+				break;
+			case "lake" :
+				lakeCount++;
+				this.terrainSections[7] = "lake";
+			
+				break;
+			case "game-trail" :
+				gameTrailCount++;
+				this.terrainSections[7] = "game-trail";
+			
+				break;
+			default :
+				System.out.println("unable to identify terrain type on card");
+		}
 		
 		
 		if(super.den){
-			this.meepleSlots.den = 0;
+			
 			this.terrainSections[4] = "den";
 		}
 		
-		else{
-			this.meepleSlots.den = -1;
-		}
+		
 		
 		//handle slots for lake
 		if(super.lakesConnected){
 			if(lakeCount>0){
-				this.meepleSlots.lakeOne = 0;
-				this.meepleSlots.lakeTwo = -1;
+				
 				 
 				if((super.terrainOnSide.up.equals("lake") && super.terrainOnSide.bottom.equals("lake")) || (super.terrainOnSide.left.equals("lake") && super.terrainOnSide.right.equals("lake"))){
 					this.terrainSections[4] = "lake";
@@ -183,27 +178,18 @@ public class Tile extends Card {
 			}
 			 
 			if(lakeCount == 4){
-				this.meepleSlots.jungleOne = -1;
-				this.meepleSlots.jungleTwo = -1;
-				this.meepleSlots.jungleThree = -1;
-				this.meepleSlots.jungleFour = -1;
+				
 				
 				this.terrainSections[4] = "lake";
 			}
 			 
 			else if(lakeCount == 3 && gameTrailCount == 0){
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = -1;
-				this.meepleSlots.jungleThree = -1;
-				this.meepleSlots.jungleFour = -1;
+				
 				this.terrainSections[4] = "lake";
 			}
 			
 			else if(lakeCount == 3 && gameTrailCount == 1){
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = 0;
-				this.meepleSlots.jungleThree = -1;
-				this.meepleSlots.jungleFour = -1;
+				
 				this.terrainSections[4] = "end-trail";
 			}
 			
@@ -211,66 +197,24 @@ public class Tile extends Card {
 				if(gameTrailCount == 0){
 					//check for connected lakes that are accross from each other
 					if((super.terrainOnSide.up.equals("lake")&&super.terrainOnSide.bottom.equals("lake"))||(super.terrainOnSide.left.equals("lake")&&super.terrainOnSide.right.equals("lake"))){
-						this.meepleSlots.jungleOne = 0;
-						this.meepleSlots.jungleTwo = 0;
-						this.meepleSlots.jungleThree = -1;
-						this.meepleSlots.jungleFour = -1;
+						
 						
 						this.terrainSections[4] = "lake";
 					}
 					//otherwise it is two lakes that cut through the tile diagonally and only 1 jungle exists
 					else{
-						this.meepleSlots.jungleOne = 0;
-						this.meepleSlots.jungleTwo = -1;
-						this.meepleSlots.jungleThree = -1;
-						this.meepleSlots.jungleFour = -1;
+						
 					}
 				}
 				
-				else if(gameTrailCount ==1){
-					this.meepleSlots.jungleOne = 0;
-					this.meepleSlots.jungleTwo = -1;
-					this.meepleSlots.jungleThree = -1;
-					this.meepleSlots.jungleFour = -1;
-				}
-				
-				else if(gameTrailCount == 2){
-					this.meepleSlots.jungleOne = 0;
-					this.meepleSlots.jungleTwo = 0;
-					this.meepleSlots.jungleThree = -1;
-					this.meepleSlots.jungleFour = -1;
-				}
 			}
 			
-			else if(lakeCount == 3){
-				if(gameTrailCount == 0){
-					this.meepleSlots.jungleOne = 0;
-					this.meepleSlots.jungleTwo = -1;
-					this.meepleSlots.jungleThree = -1;
-					this.meepleSlots.jungleFour = -1;
-				}
-				
-				else if (gameTrailCount == 1){
-					this.meepleSlots.jungleOne = 0;
-					this.meepleSlots.jungleTwo = 0;
-					this.meepleSlots.jungleThree = -1;
-					this.meepleSlots.jungleFour = -1;
-				}
-			}
+			
 		}
 		
 		else{
-			if(lakeCount==0){
-				this.meepleSlots.lakeOne = -1;
-				this.meepleSlots.lakeTwo = -1;
-			}
-			else if(lakeCount==1){
-				this.meepleSlots.lakeOne = 0;
-				this.meepleSlots.lakeTwo = -1;
-			}
-			else if(lakeCount == 2){
-				this.meepleSlots.lakeOne = 0;
-				this.meepleSlots.lakeTwo = 0;
+			if(lakeCount == 2){
+				
 				
 				if((super.terrainOnSide.up.equals("lake")&&super.terrainOnSide.bottom.equals("lake"))||(super.terrainOnSide.left.equals("lake")&&super.terrainOnSide.right.equals("lake"))){
 					
@@ -279,43 +223,7 @@ public class Tile extends Card {
 				}
 			}
 			
-			if((gameTrailCount == 0 || gameTrailCount == 1) && lakeCount!=1){ //if the jungle count is 0, it is purely dependent on the number of roads and lakes
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = -1;
-				this.meepleSlots.jungleThree = -1;
-				this.meepleSlots.jungleFour = -1;
-			}
 			
-			else if(gameTrailCount == 1 && lakeCount==1){ 
-				//could add an extra check for if the lake and trail are on opposite sides
-				//but since there are not other cards with 1 lake and 1 trail
-				//it can just be added later if needed
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = 0;
-				this.meepleSlots.jungleThree = -1;
-				this.meepleSlots.jungleFour = -1;
-			}
-			
-			else if(gameTrailCount == 2){
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = 0;
-				this.meepleSlots.jungleThree = -1;
-				this.meepleSlots.jungleFour = -1;
-			}
-			
-			else if (gameTrailCount == 3){
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = 0;
-				this.meepleSlots.jungleThree = 0;
-				this.meepleSlots.jungleFour = -1;
-			}
-			
-			else if(gameTrailCount == 4){
-				this.meepleSlots.jungleOne = 0;
-				this.meepleSlots.jungleTwo = 0;
-				this.meepleSlots.jungleThree = 0;
-				this.meepleSlots.jungleFour = 0;
-			}
 			
 			
 		}
@@ -332,31 +240,90 @@ public class Tile extends Card {
 		// terrain of 8 = terrain of 5 + terrain of 7
 		// terrain of 6 - terrain of 3 + terrain of 7
 		//using a delimiter , between the two sections. the sections are listed left to right, as if you were looking at the tile. The one on the left takes priority as to what meeple slot is on it
-		this.terrainSections[0] = this.terrainSections[3] + "," + this.terrainSections[1];
-		this.terrainSections[2] = this.terrainSections[1] + "," + this.terrainSections[5];
-		this.terrainSections[8] = this.terrainSections[7] + "," + this.terrainSections[5];
-		this.terrainSections[6] = this.terrainSections[3] + "," + this.terrainSections[7];
+		if(super.lakesConnected){
+			
+			//[0]
+			if(this.terrainSections [3].equals("lake") && this.terrainSections[1].equals("lake")){
+				this.terrainSections[0] = "lake";
+			}
+
+			else if(this.terrainSections[3].equals("game-trail") && this.terrainSections[1].equals("game-trail")){
+				this.terrainSections[0] = "jungle";
+			}
+
+			else{
+				this.terrainSections[0] = "jungle";
+			}
+
+
+			//[2]
+			if(this.terrainSections[5].equals("lake") && this.terrainSections[1].equals("lake")){
+				this.terrainSections[2] = "lake";
+			}
+
+			else if(this.terrainSections[5].equals("game-trail") && this.terrainSections[1].equals("game-trail")){
+				this.terrainSections[2] = "jungle";
+			}
+
+			else{
+				this.terrainSections[2] = "jungle";
+			}
+
+			//[6]
+			if(this.terrainSections[3].equals("lake") && this.terrainSections[7].equals("lake")){
+				this.terrainSections[6] = "lake";
+			}
+
+			else if(this.terrainSections[3].equals("game-trail") && this.terrainSections[7].equals("game-trail")){
+				this.terrainSections[6] = "jungle";
+			}
+
+			else{
+				this.terrainSections[6] = "jungle";
+			}
+
+			//[8]
+			if(this.terrainSections[5].equals("lake") && this.terrainSections[7].equals("lake")){
+				this.terrainSections[8] = "lake";
+			}
+
+			else if(this.terrainSections[5].equals("game-trail") && this.terrainSections[7].equals("game-trail")){
+				this.terrainSections[8] = "jungle";
+			}
+
+			else{
+				this.terrainSections[8] = "jungle";
+			}
+
+
+		}
+
+		else{ //if lakes are not connected, corners are always jungle!
+			this.terrainSections[0] = "jungle";
+			this.terrainSections[2] = "jungle";
+			this.terrainSections[8] = "jungle";
+			this.terrainSections[6] = "jungle";
+		}
+
+
+		
 		
 		//most of the center cases were also taken care of, only one that needs to be done if it is an intersection and it needs to be assigned end-trail or if it is a jungle when all 4 sides are jungle
-		if((super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.right.equals("game-trail")) || 
+		if(((super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.right.equals("game-trail"))  || 
 		   (super.terrainOnSide.bottom.equals("game-trail") && super.terrainOnSide.right.equals("game-trail")) ||
 		   (super.terrainOnSide.bottom.equals("game-trail") && super.terrainOnSide.left.equals("game-trail")) ||
-		   (super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.left.equals("game-trail")))
+		   (super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.left.equals("game-trail"))) && gameTrailCount == 2)
 		{
 			this.terrainSections[4] = "game-trail";
 		}
 		
 		else if(jungleCount == 4){
-			this.terrainSections[4] = "jungle";
-		}
-		
-		
-		
-		
-			
-	}
+			if(!super.den){
+				this.terrainSections[4] = "jungle";
+			}
 
-	
+		}		
+	}
 	
 }
 
