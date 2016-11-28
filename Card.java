@@ -20,7 +20,7 @@ public class Card{
 
 	Card(String string){
 		
-				this.CardCode = string;
+		this.CardCode = string;
 		this.terrainOnSide = new TerrainOnSide();
 		
 		if(string.charAt(0) == 'J'){
@@ -36,7 +36,7 @@ public class Card{
 		} else{
 
 		}
-			
+
 			
 		if(string.charAt(1) == 'J'){
 			this.terrainOnSide.right = "jungle";
@@ -75,7 +75,6 @@ public class Card{
 		} else{
 
 		}
-			
 			
 		if( string.charAt(4) == '-'){
 			this.croc=false;
@@ -165,7 +164,6 @@ public class Card{
 		else{
 
 		}
-
 	}
 	
 	Card(String terrainUp, String terrainRight, String terrainBottom, String terrainLeft, 

@@ -46,6 +46,8 @@ public class Board {
 		Card card = new Card(cardCode); 
 		Tile tile = new Tile(card, rotation, (row+(int)boardColumnNumber/2) , (column+ (int)boardRowNumber/2), false, false, false, false);
 		
+
+
 		// position the tile at the starting location and then mark it off as existing
 		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2] = tile;
 		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2].isPlacedOnBoard = true;
@@ -86,7 +88,7 @@ public class Board {
 				// if a tile exists already at the location then we don't want to calculate it
 				if(tileTracker[i][j]){
 					adjacent = false;
-					System.out.println("ONE");
+					System.out.println("ONE " + i + " " +j + " " + tileArray[i][j].returnCardCode() + " " + tileArray[i][j].finalPlacedOrientation.up + " " + tileArray[i][j].finalPlacedOrientation.right + " " + tileArray[i][j].finalPlacedOrientation.bottom + " " +tileArray[i][j].finalPlacedOrientation.left);
 				}
 				if(adjacent){
 					// create coordinate to analyze later
@@ -97,18 +99,9 @@ public class Board {
 		}
 		// now with the possible locations, we check the 4 sides at each of the 4 rotations to see if it could work
 
-
-			System.out.println(card.terrainOnSide.up);
-			System.out.println(card.terrainOnSide.right);
-			System.out.println(card.terrainOnSide.bottom);
-			System.out.println(card.terrainOnSide.left);
-
 		for(int i=0; i<checkLocations.size(); i++){
 			// itterate through each of the possible points rotations the current card and checking if 4 sides match up
 			Coordinates verify = checkLocations.get(i);
-
-
-
 
 			boolean rotation0 = true;
 			boolean rotation1 = true;
@@ -126,7 +119,7 @@ public class Board {
 				}
 
 				// 90 clockwise
-				if(card.terrainOnSide.left == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+				if(card.terrainOnSide.right == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
 					// valid 
 				} else {
 					rotation1 = false;
@@ -140,7 +133,7 @@ public class Board {
 				}
 
 				// 90 counterclockwise
-				if(card.terrainOnSide.right == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
+				if(card.terrainOnSide.left == tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom){
 					// valid 
 				} else {
 					rotation3 = false;
@@ -294,7 +287,7 @@ public class Board {
 			westNeighbor = true;
 		}	
 		
-		Tile tile = new Tile(response.card, response.row, response.column, response.orientation, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
+		Tile tile = new Tile(response.card, response.orientation, response.row, response.column, northNeighbor, eastNeighbor, southNeighbor, westNeighbor); 
 		
 		// mark as placed with tileTracker array
 		this.tileTracker[response.row][response.column] = true;

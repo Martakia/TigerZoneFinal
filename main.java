@@ -188,7 +188,7 @@ public class main{
 
                                                       }
                                                       else{
-                                                            response.append("GAME " + serverInfo[5] + " MOVE " +  serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation);
+                                                            response.append("GAME " + serverInfo[5] + " MOVE " +  serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation*90);
                                                             if(info.tigerPlaced){
                                                                   // tigerPlace is true
                                                                   response.append(" TIGER " + info.tigerLocation);
@@ -276,7 +276,7 @@ public class main{
 
                                                       // row = ylocation
                                                       // column = xlocation
-                                                      ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, yLocation, xLocation, rotation, tigerPlaced, tigerLocation, crocodilePlaced);
+                                                      ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, yLocation, xLocation, (rotation/90), tigerPlaced, tigerLocation, crocodilePlaced);
                                                       
                                                       if(serverInfo[2].equals(gidOne)){
                                                             // update info for Game 1

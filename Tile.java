@@ -40,13 +40,13 @@ public class Tile extends Card {
 		this.rotation=rotation;
 		
 		// After the card is placed on the TILE and BOARD, it cannot be rotated or moved
-		if(rotation == 0){ 								// 0 = no rotation made, card in original position
+		if(rotation == 0){ 								// 0 = no rotation 
 			finalPlacedOrientation = new TerrainOnSide(cardBeingPlaced.terrainOnSide.up,
 													   cardBeingPlaced.terrainOnSide.right,
 													   cardBeingPlaced.terrainOnSide.bottom,
 													   cardBeingPlaced.terrainOnSide.left);
 		}
-		else if(rotation == 1){ 						// 1 = rotation 90 degrees clockwise
+		else if(rotation == 3){ 						// 3 = rotation 90 degrees clockwise
 			finalPlacedOrientation = new TerrainOnSide(cardBeingPlaced.terrainOnSide.left,
 													   cardBeingPlaced.terrainOnSide.up,
 													   cardBeingPlaced.terrainOnSide.right,
@@ -65,6 +65,10 @@ public class Tile extends Card {
 													   cardBeingPlaced.terrainOnSide.up);
 		}
 		
+	}
+
+	public String returnCardCode(){
+		 return super.CardCode;
 	}
 
 	
