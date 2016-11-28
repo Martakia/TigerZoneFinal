@@ -27,11 +27,17 @@ public class Player {
 		for(int i=0; i<stuff.size(); i++){
 			System.out.println(stuff.get(i).row + " " + stuff.get(i).column + " " + stuff.get(i).rotation );
 		}
-
+		// AI stuff, if there is a den on the card, we always want to place a tiger there
 
 		// at this point the AI picks a random tile out of the available options 
 		int random = (int)(Math.random()*stuff.size());
 		System.out.println("random is " +random);	
+
+		boolean denOnCard = false;
+		if(cardToPlace.den){
+			denOnCard = true;
+		}
+
 
 		PlayerMoveInformation response;
 			if(stuff.size() == 0){
@@ -39,6 +45,12 @@ public class Player {
 
 				// this is the PASS response
 				 response = new PlayerMoveInformation(cardToPlace,0, 0, 0,false,0, false,true, true, false, false, 0,0);
+			}
+			else if(denOnCard){
+				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
+				
+				// now update local version of board before sending out the response 
+				this.localVersionOfBoard.updateBoard(response);
 			}
 			else{
 				// TODO implement random choice of picking tiger location, right now set to false

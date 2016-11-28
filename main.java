@@ -292,6 +292,8 @@ public class main{
 // DONE
              		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("OVER")){
              			System.out.println("	=== Game is over ===");
+                              gidOne = "";
+                              gidTwo = "";
              			// game over
              		}
              		else if(serverInfo[0].equals("END") && serverInfo[1].equals("OF")){
