@@ -44,19 +44,19 @@ public class Tile extends Card {
 													   cardBeingPlaced.terrainOnSide.bottom,
 													   cardBeingPlaced.terrainOnSide.left);
 		}
-		else if(rotation == 3){ 						// 3 = rotation 90 degrees clockwise
+		else if(rotation == 3){ 						
 			finalPlacedOrientation = new TerrainOnSide(cardBeingPlaced.terrainOnSide.left,
 													   cardBeingPlaced.terrainOnSide.up,
 													   cardBeingPlaced.terrainOnSide.right,
 													   cardBeingPlaced.terrainOnSide.bottom);
 		}
-		else if (rotation == 2){						//2 = rotation 180 degrees
+		else if (rotation == 2){						
 			finalPlacedOrientation = new TerrainOnSide(cardBeingPlaced.terrainOnSide.bottom,
 													   cardBeingPlaced.terrainOnSide.left,
 													   cardBeingPlaced.terrainOnSide.up,
 													   cardBeingPlaced.terrainOnSide.right);
 		}
-		else{											// rotation 270 degrees clockwise
+		else{				// rotation == 1						
 			finalPlacedOrientation = new TerrainOnSide(cardBeingPlaced.terrainOnSide.right,
 													   cardBeingPlaced.terrainOnSide.bottom,
 													   cardBeingPlaced.terrainOnSide.left,

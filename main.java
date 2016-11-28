@@ -289,11 +289,11 @@ public class main{
                                                       
                                                       if(serverInfo[2].equals(gidOne)){
                                                             // update info for Game 1
-                                                            games[0].player.localVersionOfBoard.udpateBoardFromServerResponse(updateInfo);
+                                                            games[0].board.udpateBoardFromServerResponse(updateInfo);
                                                       }
                                                       else {
                                                             // update info for Game 2
-                                                            games[1].player.localVersionOfBoard.udpateBoardFromServerResponse(updateInfo);
+                                                            games[1].board.udpateBoardFromServerResponse(updateInfo);
                                                       }     
                                     }
              			}

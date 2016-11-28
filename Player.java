@@ -57,6 +57,12 @@ public class Player {
 				// this is the PASS response
 				 response = new PlayerMoveInformation(cardToPlace,0, 0, 0,false,0, false,true, true, false, false, 0,0);
 			}
+			else if(!firstMoveMade){
+				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,1,false, false, false, false, false, 0,0);
+				this.tigerCount--;
+				this.localVersionOfBoard.updateBoard(response);
+				firstMoveMade = true;
+			}
 			else if(denOnCard && (this.tigerCount>0)){
 				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
 				this.tigerCount--;
@@ -68,12 +74,6 @@ public class Player {
 				this.x = stuff.get(random).row;
 				this.y= stuff.get(random).column;
 			}
-			else if(!firstMoveMade){
-				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,1,false, false, false, false, false, 0,0);
-				this.tigerCount--;
-				this.localVersionOfBoard.updateBoard(response);
-				firstMoveMade = true;
-			}
 			else if(((cardToPlace.deer || cardToPlace.boar || cardToPlace.buffalo) && cardToPlace.croc == false) && (this.crocCount > 0)) {
 
 				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,true, false, false, false, false, 0,0);
@@ -82,6 +82,7 @@ public class Player {
 				this.localVersionOfBoard.updateBoard(response);
 				this.crocCount--;
 			}
+			/*
 			else if(denPriority) {
 				ArrayList<PlacementPossibility> denPossibilities = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
 
@@ -114,6 +115,7 @@ public class Player {
 					}
 				
 			}
+			*/
 			else{
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
 				

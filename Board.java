@@ -99,6 +99,13 @@ public class Board {
 		}
 		// now with the possible locations, we check the 4 sides at each of the 4 rotations to see if it could work
 
+
+		System.out.println(card.terrainOnSide.up);
+		System.out.println(card.terrainOnSide.right);
+		System.out.println(card.terrainOnSide.bottom);
+		System.out.println(card.terrainOnSide.left);
+
+
 		for(int i=0; i<checkLocations.size(); i++){
 			// itterate through each of the possible points rotations the current card and checking if 4 sides match up
 			Coordinates verify = checkLocations.get(i);
@@ -118,24 +125,22 @@ public class Board {
 					rotation0 = false;
 				}
 
-				// 90 clockwise
-
-
-				if(card.terrainOnSide.left.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
+				// 90 counterclockwise
+				if(card.terrainOnSide.right.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid 
 				} else {
 					rotation1 = false;
 				}
 
-				// 180 clockwise rotation
+				// 180 coutnerclockwise
 				if(card.terrainOnSide.bottom.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid
 				} else {
 					rotation2 = false;
 				}
 
-				// 90 counterclockwise
-				if(card.terrainOnSide.right.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
+				// 270 counterclockwise
+				if(card.terrainOnSide.left.equals(tileArray[verify.row+1][verify.column].finalPlacedOrientation.bottom)){
 					// valid 
 				} else {
 					rotation3 = false;
@@ -153,7 +158,7 @@ public class Board {
 					rotation0 = false;
 				}
 
-				// with 90 clockwise
+				// with 90 counterclockwise
 				if(card.terrainOnSide.bottom.equals(tileArray[verify.row][verify.column+1].finalPlacedOrientation.left)){
 					// valid
 				} else {
@@ -167,7 +172,7 @@ public class Board {
 					rotation2 = false;
 				}
 
-				// with 90 counter
+				// 270 counterclockwise
 				if(card.terrainOnSide.up.equals(tileArray[verify.row][verify.column+1].finalPlacedOrientation.left)){
 					// valid
 				} else {
@@ -184,7 +189,7 @@ public class Board {
 				} else {
 					rotation0 = false;
 				}
-				// 90 clockwise
+				// 90 counter clockwise
 				if(card.terrainOnSide.left.equals(tileArray[verify.row-1][verify.column].finalPlacedOrientation.up)){
 					// valid
 				} else {
@@ -196,7 +201,7 @@ public class Board {
 				} else {
 					rotation2 = false;
 				}
-				// 90 counterclockwise
+				// 270 counter
 				if(card.terrainOnSide.right.equals(tileArray[verify.row-1][verify.column].finalPlacedOrientation.up)){
 					// valid
 				} else {
@@ -241,21 +246,19 @@ public class Board {
 				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 0);
 				possibilities.add(addMe);
 			}
-			if(rotation1){ // 1 == 90 clockwise
+			if(rotation1){ 
 				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 1);
 				possibilities.add(addMe);
 			}
-			if(rotation2){ // 2 == 180
+			if(rotation2){ 
 				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 2);
 				possibilities.add(addMe);
 			}
-			if(rotation3){ // 3 == 90 counterclockwise
+			if(rotation3){ 
 				PlacementPossibility addMe = new PlacementPossibility(verify.row, verify.column, 3);
 				possibilities.add(addMe);
 			}
 		}
-
-
 
 		return possibilities;
 	}
@@ -303,6 +306,8 @@ public class Board {
 			TigerInformation addInfo = new TigerInformation(response.row, response.column, response.tigerLocation);
 			tigerLocations.add(addInfo);
 		}
+
+		System.out.println("BOARD BEING UPDATED WITH " +response.row + " " + response.column);
 		
 	}
 	
