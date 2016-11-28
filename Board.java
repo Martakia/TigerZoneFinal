@@ -44,10 +44,8 @@ public class Board {
 	{
 		// create card for the information that was given and then create the tile
 		Card card = new Card(cardCode); 
-		Tile tile = new Tile(card, rotation, (row+(int)boardColumnNumber/2) , (column+ (int)boardRowNumber/2), false, false, false, false);
+		Tile tile = new Tile(card, rotation, ((row+(int)boardColumnNumber/2))+1 , ((column+ (int)boardRowNumber/2))+1, false, false, false, false);
 		
-
-
 		// position the tile at the starting location and then mark it off as existing
 		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2] = tile;
 		this.tileArray[(int)boardRowNumber/2][(int)boardColumnNumber/2].isPlacedOnBoard = true;

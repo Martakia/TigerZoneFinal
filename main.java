@@ -12,6 +12,10 @@ public class main{
 	 static String tournamentPassword;  
 	 static String username;
 	 static String password;
+
+
+       static public int startingX =0;
+       static public int startingY =0;
 	
 	public static void main(String args[]){
 
@@ -110,9 +114,12 @@ public class main{
                   			int yLocation = Integer.parseInt(serverInfo[6]);
                   			int rotation = Integer.parseInt(serverInfo[7]);
 
+                                    startingX = xLocation;
+                                    startingY = yLocation;
+
                   		// place the first tile on the board
-                  		games[0].board.placeFirstCard(cardCode, xLocation, yLocation, rotation);
-                  		games[1].board.placeFirstCard(cardCode, xLocation, yLocation, rotation);
+                  		games[0].board.placeFirstCard(cardCode, 0, 0, rotation);
+                  		games[1].board.placeFirstCard(cardCode, 0, 0, rotation);
                   		
                   	}
                   	else if(serverInfo[0].equals("THE") && serverInfo[1].equals("REMAINING")){
@@ -170,7 +177,7 @@ public class main{
 		             						info = games[1].player.makeMove(cardToPlace);
 		             					}
 		             					// 
-		             					int subtract = games[0].board.boardColumnNumber/2;
+		             					int subtract = (games[0].board.boardColumnNumber/2) +1;
 
                                                       if(info.unplaceable){
                                                             // generate responses
@@ -188,7 +195,7 @@ public class main{
 
                                                       }
                                                       else{
-                                                            response.append("GAME " + serverInfo[5] + " MOVE " +  serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract) + " "  +(info.row-subtract) + " " +info.orientation*90);
+                                                            response.append("GAME " + serverInfo[5] + " MOVE " +  serverInfo[10] + " PLACE " +serverInfo[12] + " AT " + (info.column-subtract+startingX) + " "  +(info.row-subtract+startingY) + " " +info.orientation*90);
                                                             if(info.tigerPlaced){
                                                                   // tigerPlace is true
                                                                   response.append(" TIGER " + info.tigerLocation);
@@ -197,7 +204,7 @@ public class main{
                                                                   response.append(" CROCODILE");
                                                             } 
                                                             else{
-                                                                  // nothing special to add
+                                                                  response.append(" NONE");
                                                             }
                                                       }		
 		             					fromUser = response.toString();
@@ -254,10 +261,12 @@ public class main{
                                     else{
                                           // must be PLACED 
                                                       System.out.println("    === Valid move confirmed by server ===");
+                                                      games[0].player.firstMoveMade = true;
+                                                      games[1].player.firstMoveMade = true;
                                                       // valid move, do something
                                                       Card card = new Card(serverInfo[7]);
-                                                      int xLocation = Integer.parseInt(serverInfo[9]);
-                                                      int yLocation = Integer.parseInt(serverInfo[10]);
+                                                      int xLocation = (Integer.parseInt(serverInfo[9])) -startingX;
+                                                      int yLocation = (Integer.parseInt(serverInfo[10])) - startingY;
                                                       int rotation = Integer.parseInt(serverInfo[11]);
                                                       boolean tigerPlaced = false;
                                                       boolean crocodilePlaced = false;

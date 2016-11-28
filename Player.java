@@ -4,10 +4,15 @@ public class Player {
 	
 	public Board localVersionOfBoard;
 	public ArrayList<Card> localVersionOfDeck;
+	boolean firstMoveMade;
+	public int tigerCount;
+	public int crocCount;
 	
 	Player()
 	{
-		// nothing really needs initialization
+		firstMoveMade = false;
+		this.tigerCount = 8;
+		this.crocCount = 2;
 	}
 	
 	// Same deck and board is given to the Game class
@@ -34,6 +39,8 @@ public class Player {
 		System.out.println("random is " +random);	
 
 		boolean denOnCard = false;
+
+		System.out.println("if there is a den " +cardToPlace.den);
 		if(cardToPlace.den){
 			denOnCard = true;
 		}
@@ -46,11 +53,17 @@ public class Player {
 				// this is the PASS response
 				 response = new PlayerMoveInformation(cardToPlace,0, 0, 0,false,0, false,true, true, false, false, 0,0);
 			}
-			else if(denOnCard){
+			else if(denOnCard && (this.tigerCount>0)){
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
-				
+				this.tigerCount--;
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
+			}
+			else if(!firstMoveMade){
+				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,1,false, false, false, false, false, 0,0);
+				this.tigerCount--;
+				this.localVersionOfBoard.updateBoard(response);
+				firstMoveMade = true;
 			}
 			else{
 				// TODO implement random choice of picking tiger location, right now set to false
