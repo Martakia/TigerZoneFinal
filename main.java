@@ -212,7 +212,7 @@ public class main{
              		}
 // RESPONDING TO MOVE INFORMATION
              		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("MOVE")){
-             			if(serverInfo[6].equals("FORFEITED")){
+             			if(serverInfo[6].equals("FORFEITED:")){
              				System.out.println("	=== Forfiet game ===");
              				// forfeit 
              			} 
