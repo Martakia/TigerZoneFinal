@@ -92,8 +92,8 @@ public class main{
                   	else if(serverInfo[0].equals("BEGIN")){
                   		System.out.println("	=== Starting new round ===");
                   		// begin round, we want to initialize 2 games 
-	                  		Game gameOne = new Game();
-	                  		Game gameTwo = new Game();
+	                  		Game gameOne = new Game("GAME #1");
+	                  		Game gameTwo = new Game("GAME #2");
 	                  		games[0] = gameOne;
 	                  		games[1] = gameTwo;
 	                  	
@@ -212,7 +212,7 @@ public class main{
              		}
 // RESPONDING TO MOVE INFORMATION
              		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("MOVE")){
-             			if(serverInfo[6].equals("FORFEITED")){
+             			if(serverInfo[6].equals("FORFEITED:")){
              				System.out.println("	=== Forfiet game ===");
              				// forfeit 
              			} 
@@ -303,6 +303,8 @@ public class main{
              			System.out.println("	=== Game is over ===");
                               gidOne = "";
                               gidTwo = "";
+                              games[0].stop();
+                              games[1].stop();
              			// game over
              		}
              		else if(serverInfo[0].equals("END") && serverInfo[1].equals("OF")){
@@ -337,10 +339,18 @@ public class main{
 
       		 // Send ------------------------------------------------------------------------------------------------- //
                 if (fromUser != null) {
-                    System.out.println("Sending Response: " + fromUser);
-                    out.println(fromUser);
-                    // after sending information, we clear fromUser
-                    fromUser = null;
+
+                  try{
+                              Thread.sleep(500);
+                              System.out.println("Sending Response: " + fromUser);
+                              out.println(fromUser);
+                              // after sending information, we clear fromUser
+                               fromUser = null;
+                  }
+                  catch (Exception e){
+
+                  }
+
                 }
              // ------------------------------------------------------------------------------------------------------ //
             }
