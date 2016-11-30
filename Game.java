@@ -12,6 +12,10 @@ public class Game implements Runnable{
 	private String threadName;
 	private String gameName;
 	private JFrame frame;
+
+	 // for debugging, turns on the board at the very end of each round for a certain period of time 
+     static public boolean TURN_ON_GUI = true;
+     static public int GUI_DISPLAY_TIME = 10000;
 	
 	//creates players, deck and board that belong to this instance of the game
 	public Game(String gameName) 
@@ -25,12 +29,17 @@ public class Game implements Runnable{
 	}	
 
 	public void display(){
-		this.start();
-		try{
-			Thread.sleep(5000);
-		} catch(Exception e){
 
-		}
+		if(TURN_ON_GUI){
+			try{
+				this.start();
+				Thread.sleep(GUI_DISPLAY_TIME);
+			}
+			catch(Exception e){
+
+			}
+		}	
+		
 	}
 
 	public void run() {
@@ -79,7 +88,9 @@ public class Game implements Runnable{
 	}
 
 	public void stop(){
-		this.frame.dispose();
+		if(TURN_ON_GUI){
+			this.frame.dispose();
+		}
 	}
 
 	public void start(){

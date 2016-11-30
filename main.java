@@ -16,7 +16,7 @@ public class main{
 
        static public int startingX =0;
        static public int startingY =0;
-	
+
 	public static void main(String args[]){
 
 
@@ -158,10 +158,12 @@ public class main{
              					// called only at the start when we don't know the gid
              					firstMoveMade = true;
              					gidOne = gameID;
+                                          System.out.println("GAME ID 1 " +gidOne);
              				} else if (!secondMoveMade){
              					// called only when we have to make the second move
              					secondMoveMade = true;
              					gidTwo = gameID;
+                                           System.out.println("GAME ID 2 " +gidTwo);
              				} else {
              					// not one of the first 2 moves
              				}
@@ -287,12 +289,14 @@ public class main{
                                                       // column = xlocation
                                                       ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, yLocation, xLocation, (rotation/90), tigerPlaced, tigerLocation, crocodilePlaced);
                                                       
-                                                      if(serverInfo[2].equals(gidOne)){
+                                                      if(serverInfo[1].equals(gidOne)){
                                                             // update info for Game 1
+                                                            System.out.println("GAME 1 Updates");
                                                             games[0].board.udpateBoardFromServerResponse(updateInfo);
                                                       }
                                                       else {
                                                             // update info for Game 2
+                                                            System.out.println("GAME 2 Updates");
                                                             games[1].board.udpateBoardFromServerResponse(updateInfo);
                                                       }     
                                     }
