@@ -9,6 +9,8 @@ public class Player {
 
 	public boolean denPriority;
 	public int denRow, denColumn;
+
+	final public int tigerLimit = 7;
 	
 	Player()
 	{
@@ -47,6 +49,45 @@ public class Player {
 			denOnCard = true;
 		}
 
+		boolean trailPriority = false;
+		int trailCount = 0;
+		for(int i=0; i<4; i++){
+			if(cardToPlace.CardCode.charAt(0) == 'T'){
+				trailCount++;
+			}
+			if(cardToPlace.CardCode.charAt(1) == 'T'){
+				trailCount++;
+			}
+			if(cardToPlace.CardCode.charAt(2) == 'T'){
+				trailCount++;
+			}
+			if(cardToPlace.CardCode.charAt(3) == 'T'){
+				trailCount++;
+			}
+			if(trailCount >= 3){
+				trailPriority = true;
+			}
+		}
+
+		boolean oneLakePriority = false;
+		int lakeCount = 0;
+		for(int i=0; i<4; i++){
+			if(cardToPlace.CardCode.charAt(0) == 'L'){
+				lakeCount++;
+			}
+			if(cardToPlace.CardCode.charAt(1) == 'L'){
+				lakeCount++;
+			}
+			if(cardToPlace.CardCode.charAt(2) == 'L'){
+				lakeCount++;
+			}
+			if(cardToPlace.CardCode.charAt(3) == 'L'){
+				lakeCount++;
+			}
+			if(trailCount == 1){
+				oneLakePriority = true;
+			}
+		}
 
 		PlayerMoveInformation response = null;
 
@@ -89,6 +130,98 @@ public class Player {
 				this.localVersionOfBoard.updateBoard(response);
 				this.crocCount--;
 			}
+			else if(oneLakePriority && this.tigerCount >0){
+
+				boolean solutionFound = false;
+
+				for(int i=0; i<stuff.size(); i++){
+
+					boolean north = this.localVersionOfBoard.tileTracker[stuff.get(i).row+1][stuff.get(i).column];
+					boolean east = 	this.localVersionOfBoard.tileTracker[stuff.get(i).row][stuff.get(i).column+1];
+					boolean south = this.localVersionOfBoard.tileTracker[stuff.get(i).row-1][stuff.get(i).column];
+					boolean west = this.localVersionOfBoard.tileTracker[stuff.get(i).row][stuff.get(i).column-1];
+
+					// check north location
+					if(cardToPlace.CardCode.charAt(0) == 'L' && !north && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'L' && !north && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'L' && !north && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'L' && !north && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					// now for west location
+					else if(cardToPlace.CardCode.charAt(0) == 'L' && !west && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'L' && !west && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'L' && !west && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'L' && !west && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					// now for south
+					else if(cardToPlace.CardCode.charAt(0) == 'L' && !south && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'L' && !south && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'L' && !south && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'L' && !south && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					// now for east
+					else if(cardToPlace.CardCode.charAt(0) == 'L' && !east && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'L' && !east && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'L' && !east && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'L' && !east && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else{
+						solutionFound = false;
+					}
+				}
+				if(!solutionFound){
+					System.out.println("-------no solution found!!!!!");
+					response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+				}
+				else{
+					this.tigerCount--;
+				}
+			}
+
 			else if(denPriority) {
 				ArrayList<PlacementPossibility> denPossibilities = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
 
