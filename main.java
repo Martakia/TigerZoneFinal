@@ -303,6 +303,9 @@ public class main{
              			System.out.println("	=== Game is over ===");
                               gidOne = "";
                               gidTwo = "";
+                              games[0].display();
+                              games[1].display();
+
                               games[0].stop();
                               games[1].stop();
              			// game over
@@ -340,16 +343,10 @@ public class main{
       		 // Send ------------------------------------------------------------------------------------------------- //
                 if (fromUser != null) {
 
-                  try{
-                              Thread.sleep(500);
                               System.out.println("Sending Response: " + fromUser);
                               out.println(fromUser);
                               // after sending information, we clear fromUser
                                fromUser = null;
-                  }
-                  catch (Exception e){
-
-                  }
 
                 }
              // ------------------------------------------------------------------------------------------------------ //
