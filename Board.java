@@ -15,7 +15,9 @@ public class Board {
 	public volatile Vector<Coordinates> actualPlacementTracker; /*this vector updates each turn and o keep coordinates
 	 												of tiles that are placed. It exists to avoid going through 
 	 												tileArray 155*155 array too often*/
-	ArrayList<TigerInformation> tigerLocations;
+	
+	ArrayList<TigerInformation> ourTigerLocations;
+	ArrayList<TigerInformation> enemyTigerLocations;
 
 	Board()
 	{
@@ -38,10 +40,19 @@ public class Board {
 				
 			}
 		}	
-
-		tigerLocations = new ArrayList<TigerInformation>();
+		// used to keep track 
+		ourTigerLocations = new ArrayList<TigerInformation>();
+		enemyTigerLocations = new ArrayList<TigerInformation>();
 		System.out.println("CHECKPOINT: Board Initialization complete");
 	}
+
+	public int numberOfTigersWePlaced(){
+		return this.ourTigerLocations.size();
+	}
+	public int numberOfTigersEnemyPlaced(){
+		return this.enemyTigerLocations.size();
+	}
+
 	void placeFirstCard(String cardCode, int row, int column, int rotation)
 	{
 		// create card for the information that was given and then create the tile
@@ -303,17 +314,12 @@ public class Board {
 
 		if(response.tigerPlaced){
 			// tiger has been placed, we need to keep track of it
-			TigerInformation addInfo = new TigerInformation(response.row, response.column, response.tigerLocation);
-			tigerLocations.add(addInfo);
+			TigerInformation addInfo = new TigerInformation(response.row, response.column, response.tigerLocation, false);
+			ourTigerLocations.add(addInfo);
 		}
 
 		System.out.println("BOARD BEING UPDATED WITH " +response.row + " " + response.column);
 		
-	}
-	
-
-	public ArrayList<TigerInformation> returnTigersPlaced(){
-		return this.tigerLocations;
 	}
 	
 	public void udpateBoardFromServerResponse(ServerMoveValidationResponse response){
@@ -349,8 +355,14 @@ public class Board {
 
 		if(response.tigerPlaced){
 			// tiger has been added, we need to keep track of it
-			TigerInformation addInfo = new TigerInformation(response.row, response.column, response.tigerLocation);
-			tigerLocations.add(addInfo);
+			TigerInformation addInfo;
+			if(response.enemy){
+				addInfo = new TigerInformation(response.row, response.column, response.tigerLocation, true);
+				enemyTigerLocations.add(addInfo);
+			} else {
+				// don't add, we already added the tigerInfo on our side before the response was sent
+			}
+			
 		}
 
 	}

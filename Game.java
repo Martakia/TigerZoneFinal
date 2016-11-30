@@ -14,7 +14,7 @@ public class Game implements Runnable{
 	private JFrame frame;
 
 	 // for debugging, turns on the board at the very end of each round for a certain period of time 
-     static public boolean TURN_ON_GUI = true;
+     static public boolean TURN_ON_GUI = false;
      static public int GUI_DISPLAY_TIME = 10000;
 	
 	//creates players, deck and board that belong to this instance of the game

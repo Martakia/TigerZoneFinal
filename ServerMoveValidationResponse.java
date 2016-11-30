@@ -9,9 +9,10 @@ public class ServerMoveValidationResponse {
 	final public boolean tigerPlaced;
 	final public int tigerLocation;
 	final public boolean crocPlaced;
+	final public boolean enemy;
 
 	// final and public because we want to share it with the other players, but final so no modifications can be made after initialization of object
-	ServerMoveValidationResponse( Card card, int row, int column, int cardOrientation, boolean tigerPlaced, int tigerLocation, boolean crocPlaced){
+	ServerMoveValidationResponse( Card card, int row, int column, int cardOrientation, boolean tigerPlaced, int tigerLocation, boolean crocPlaced, boolean enemy){
 		this.card = card;
 		this.row = row;
 		this.column = column;
@@ -19,5 +20,6 @@ public class ServerMoveValidationResponse {
 		this.tigerPlaced = tigerPlaced;
 		this.tigerLocation = tigerLocation;
 		this.crocPlaced = crocPlaced;
+		this.enemy = enemy;
 	}
 }

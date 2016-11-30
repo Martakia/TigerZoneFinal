@@ -19,6 +19,8 @@ public class main{
 
 	public static void main(String args[]){
 
+            Log log = new Log("LogInfo.txt"); 
+            log.LogInfo("this is working!"); 
 
             hostName = args[0];
             portNumber = Integer.parseInt(args[1]);
@@ -40,7 +42,7 @@ public class main{
             // array that will store both of the games
             Game[] games = new Game[2];
             int numberOfRounds = -1;
-            String opponent;
+            String opponent = "";
             boolean firstMoveMade = false;
             boolean secondMoveMade = false;
             String gidOne = "";
@@ -56,7 +58,7 @@ public class main{
             	// Incoming messages from the server are handled here 
                 System.out.println("Recieving Reponse: " + fromServer);
 
-                
+                log.LogInfo("Recieving Response: " +fromServer);       
 // DONE
                 // Handle each of the Server Responses
 	                if (fromServer.equals("THIS IS SPARTA!")){ 
@@ -272,6 +274,11 @@ public class main{
                                                       int rotation = Integer.parseInt(serverInfo[11]);
                                                       boolean tigerPlaced = false;
                                                       boolean crocodilePlaced = false;
+                                                      boolean enemyTiger = false;
+                                                      if(opponent.equals(serverInfo[5])){
+                                                            enemyTiger = true;
+                                                      }
+
                                                       int tigerLocation = -1;
                                                       if(serverInfo[12].equals("NONE")){
                                                             // splendid, do nothing
@@ -287,7 +294,7 @@ public class main{
 
                                                       // row = ylocation
                                                       // column = xlocation
-                                                      ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, yLocation, xLocation, (rotation/90), tigerPlaced, tigerLocation, crocodilePlaced);
+                                                      ServerMoveValidationResponse updateInfo = new ServerMoveValidationResponse(card, yLocation, xLocation, (rotation/90), tigerPlaced, tigerLocation, crocodilePlaced, enemyTiger);
                                                       
                                                       if(serverInfo[1].equals(gidOne)){
                                                             // update info for Game 1
@@ -349,6 +356,7 @@ public class main{
 
                               System.out.println("Sending Response: " + fromUser);
                               out.println(fromUser);
+                              log.LogInfo("SENDING: " +fromUser);
                               // after sending information, we clear fromUser
                                fromUser = null;
 
