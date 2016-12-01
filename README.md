@@ -6,4 +6,4 @@
   
 ### run using:
 
-  java main <IP address> <port number> <username> <password>
+  java main < IP address > < port number> < username > < password >
