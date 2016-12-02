@@ -18,7 +18,7 @@
 
   'javac Player.java Board.java Game.java main.java'
 
-#### OR just run the command
+#### OR just run the command:
 
   'make'
  
