@@ -13,7 +13,7 @@
   
 ---  
 
-## To run the TigerZone Client using a server:
+## To run the TigerZone Client using an external server (Tournament):
 
 #### COMPILE the client using:
 
@@ -29,9 +29,19 @@
 
 >  java main < IP address > < port number> < tournament password > < username > < password >
   
-  *using 'java main localhost 4444 a b c' and 'java GameServer 4444' on 2 different command prompts will allow you to test our internal server*
-  
 ---
+
+## To run the TigerZone Client using localhost server (Testing & Debugging):
+
+#### COMPILE the client using the same method as above ^ AND open a second command prompt to compile the following:
+
+>  javac ServerAuthProtocol.java
+ 
+#### RUN the Client using main in the original command prompt and th Server in the second command prompt:
+
+>  java main localhost 4444 a b c
+
+>  java GameServer 4444
 
 ## To run the TigerZone Client with a GUI:
 
