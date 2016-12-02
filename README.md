@@ -53,7 +53,7 @@
   
   Optionally, you can change the delay boolean to increase the amount of time in which you see the GUI in between moves.
   
-#### Then follow the same instructions as listed above ^
+#### Then follow the same instructions as listed above ^ to compile and run
   
   *WARNING: The GUI will appear distorted unless it runs with a very high resolution.*
 
