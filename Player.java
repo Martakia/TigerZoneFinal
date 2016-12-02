@@ -91,28 +91,28 @@ public class Player {
 			// check 8 spots around the den to see if they are filled, if so, tiger is given back to us
 			int neighborCount = 0;
 
-			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn+1] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn+1] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn-1] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn-1] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow][denColumn+1] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow][denColumn+1] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow][denColumn-1] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow][denColumn-1] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn+1] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn+1] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn] == true){
 				neighborCount++;
 			}
-			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn-1] == 1){
+			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn-1] == true){
 				neighborCount++;
 			}
 			// if 8, complete and return tiger,
