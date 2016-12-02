@@ -1,4 +1,4 @@
-# TigerZone - TeamR
+# TigerZone - CEN3031 - TeamR
   **Martakia** - Arturo Bustamente
   
   **mondily** - Amanda Morales
@@ -11,6 +11,7 @@
   
   **vpeixoto1** - Vanessa Peixoto
   
+---  
 
 ## To run the TigerZone Client using a server:
 
@@ -29,7 +30,8 @@
   'java main < IP address > < port number> < tournament password > < username > < password >'
   
   *using 'java main localhost 4444 a b c' and 'java GameServer 4444' on 2 different command prompts will allow you to test our internal server*
-
+  
+---
 
 ## To run the TigerZone Client with a GUI:
 
@@ -43,7 +45,7 @@
   
   *WARNING: The GUI will appear distorted unless it runs at a very high resolution.*
 
-
+---
 
 ## Acceptance Testing:
 
