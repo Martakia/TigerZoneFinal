@@ -35,7 +35,7 @@
 
 #### Change lines 10 and 11 inside main.java
 
-  Change the booleans TURN_ON_GUI and DEBUG_MODE from false to true.
+  Change the *booleans* TURN_ON_GUI and DEBUG_MODE from false to true.
   
   Optionally, you can change the delay boolean to increase the amount of time in which you see the GUI in between moves.
   
