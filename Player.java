@@ -86,6 +86,42 @@ public class Player {
 				oneLakePriority = true;
 			}
 
+		// lets try to get back some tigers that are currently placed on dens
+		if(denPriority){
+			// check 8 spots around the den to see if they are filled, if so, tiger is given back to us
+			int neighborCount = 0;
+
+			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn+1] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn-1] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow][denColumn+1] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow][denColumn-1] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn+1] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn] == 1){
+				neighborCount++;
+			}
+			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn-1] == 1){
+				neighborCount++;
+			}
+			// if 8, complete and return tiger,
+			if(neighborCount == 8){
+				this.tigerCount++;
+				this.denPriority = false;
+			}
+		}
+
 		PlayerMoveInformation response = null;
 
 			// if there are no possibilities, we have to default to the UNPLACEABLE RESPONSE
@@ -367,23 +403,23 @@ public class Player {
 							break;
 						}
 
-						/* This checks the corners of a den, but would only be used if those are possibilities */
-						// else if((this.denRow == rowTest+1) && (this.denColumn == columnTest+1) ){
-						// 	solutionFound = true;
-						// 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						// }
-						// else if((this.denRow == rowTest-1) && (this.denColumn == columnTest-1) ){
-						// 	solutionFound = true;
-						// 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						// }
-						// else if((this.denRow == rowTest+1) && (this.denColumn == columnTest-1) ){
-						// 	solutionFound = true;
-						// 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						// }
-						// else if((this.denRow == rowTest-1) && (this.denColumn == columnTest+1) ){
-						// 	solutionFound = true;
-						// 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						// }
+						// This checks the corners of a den, but would only be used if those are possibilities */
+						 else if((this.denRow == rowTest+1) && (this.denColumn == columnTest+1) ){
+						 	solutionFound = true;
+						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+						 }
+						 else if((this.denRow == rowTest-1) && (this.denColumn == columnTest-1) ){
+						 	solutionFound = true;
+						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+						 }
+						 else if((this.denRow == rowTest+1) && (this.denColumn == columnTest-1) ){
+						 	solutionFound = true;
+						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+						 }
+						 else if((this.denRow == rowTest-1) && (this.denColumn == columnTest+1) ){
+						 	solutionFound = true;
+						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+						 }
 
 				}
 					// if tile cant be placed around the den, place tile randomly in a valid position
