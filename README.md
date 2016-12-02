@@ -1,15 +1,15 @@
 # TigerZone - TeamR
-  Martakia - Arturo Bustamente
+  **Martakia** - Arturo Bustamente
   
-  mondily - Amanda Morales
+  **mondily** - Amanda Morales
   
-  konradpabjan - Konrad Pabjan
+  **konradpabjan** - Konrad Pabjan
   
-  ana16 - Ana Jelacic
+  **ana16** - Ana Jelacic
   
-  itismynamenow - George
+  **itismynamenow** - George
   
-  vpeixoto1 - Vanessa Peixoto
+  **vpeixoto1** - Vanessa Peixoto
   
 
 ## To run the TigerZone Client using a server:
@@ -26,7 +26,22 @@
  
 #### RUN the Client using:
 
-  'java main < IP address > < port number> < username > < password >'
+  'java main < IP address > < port number> < tournament password > < username > < password >'
+  
+  *using 'java main localhost 4444 a b c' and 'java GameServer 4444' on 2 different command prompts will allow you to test our internal server*
+
+
+## To run the TigerZone Client with a GUI:
+
+#### Change lines 10 and 11 inside main.java
+
+  Change the booleans TURN_ON_GUI and DEBUG_MODE from false to true.
+  
+  Optionally, you can change the delay boolean to increase the amount of time in which you see the GUI in between moves.
+  
+#### Then follow the same instructions as listed above ^
+  
+  *WARNING: The GUI will appear distorted unless it runs at a very high resolution.*
 
 
 
