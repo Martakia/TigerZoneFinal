@@ -1,3 +1,4 @@
+// internal server using localhost in order to play our AI against itself during testing
 import java.net.*;
 import java.io.*;
 import java.util.*;
