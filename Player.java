@@ -7,7 +7,7 @@ public class Player {
 	public int tigerCount;
 	public int crocCount;
 
-	public boolean denPriority;
+	public boolean denPriority;		// used for when a tile has a den
 	public int denRow, denColumn;
 
 	final public int tigerLimit = 7;
@@ -26,6 +26,7 @@ public class Player {
 	public void giveBoardToPlayer(Board board){
 		this.localVersionOfBoard = board;
 	}
+
 	public PlayerMoveInformation makeMove(Card cardToPlace)
 	{	
 	
@@ -39,12 +40,12 @@ public class Player {
 		// AI stuff, if there is a den on the card, we always want to place a tiger there
 
 		// at this point the AI picks a random tile out of the available options 
-		int random = (int)(Math.random()*stuff.size());
-		System.out.println("random is " +random);	
+		int random = (int)(Math.random()* stuff.size());
+		System.out.println("random is " + random);	
 
-		boolean denOnCard = false;
+		boolean denOnCard = false;		// if tile has a den
 
-		System.out.println("if there is a den " +cardToPlace.den);
+		System.out.println("if there is a den " + cardToPlace.den);
 		if(cardToPlace.den){
 			denOnCard = true;
 		}
@@ -84,21 +85,22 @@ public class Player {
 			if(cardToPlace.CardCode.charAt(3) == 'L'){
 				lakeCount++;
 			}
-			if(trailCount == 1){
+			if(lakeCount == 1){
 				oneLakePriority = true;
 			}
 		}
 
 		PlayerMoveInformation response = null;
 
+			// if there are no possibilities, we have to default to the UNPLACEABLE RESPONSE
 			if(stuff.size() == 0){
-				// there are no possibilities, we have to default to the UNPLACEABLE RESPONSE
 
 				// this is the PASS response
 				response = new PlayerMoveInformation(cardToPlace,0, 0, 0,false,0, false,true, true, false, false, 0,0);
 			}
+			// if Player goes first and it's their first turn, place a tiger. We are guaranteed no forfeits from invalid meeple placement
 			else if(!firstMoveMade){
-				System.out.println("-------Placed a TIGER on first move--------");
+				System.out.println("------- Placed a TIGER on first move --------");
 
 				if(denOnCard) {
 					response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
@@ -111,25 +113,30 @@ public class Player {
 				this.localVersionOfBoard.updateBoard(response);
 				firstMoveMade = true;
 			}
+			// if tile has a den, place a tiger on it
 			else if(denOnCard && (this.tigerCount>0)){
-				System.out.println("******Placed a den!!");
+				System.out.println("------- Placed a TIGER on den --------");
 				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,true,5,false, false, false, false, false, 0,0);
 				this.tigerCount--;
+
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
+
 				// now we want to prioritize placing a tiles around the tile that has the den 
 				this.denPriority = true;
 				this.denRow= stuff.get(random).row;
 				this.denColumn = stuff.get(random).column;
 			}
+			// if the card has a special character that is not a croc or den, place a crocodile one it to hopefully lessen the score of opponent
 			else if(((cardToPlace.deer || cardToPlace.boar || cardToPlace.buffalo) && cardToPlace.croc == false) && (this.crocCount > 0)) {
-				System.out.println("******Chose crocodile :D");
+				System.out.println("------- Placed a CROC on tile --------");
 				response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,true, false, false, false, false, 0,0);
 				
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
 				this.crocCount--;
 			}
+			// if tile has exactly one lake, there's a high chance we can place a meeple on it without invalid placement, check if possible
 			else if(oneLakePriority && this.tigerCount >0){
 
 				boolean solutionFound = false;
@@ -158,7 +165,7 @@ public class Player {
 						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
 					}
-					// now for west location
+					// check west location
 					else if(cardToPlace.CardCode.charAt(0) == 'L' && !west && stuff.get(i).rotation == 1){
 						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
@@ -175,7 +182,7 @@ public class Player {
 						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
 					}
-					// now for south
+					// check south location
 					else if(cardToPlace.CardCode.charAt(0) == 'L' && !south && stuff.get(i).rotation == 2){
 						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
@@ -192,7 +199,7 @@ public class Player {
 						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
 					}
-					// now for east
+					// check west location
 					else if(cardToPlace.CardCode.charAt(0) == 'L' && !east && stuff.get(i).rotation == 3){
 						solutionFound = true;
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
@@ -213,15 +220,17 @@ public class Player {
 						solutionFound = false;
 					}
 				}
+
+				// use random tile placement if solution not found, otherwise decrease tiget count
 				if(!solutionFound){
-					System.out.println("-------no solution found!!!!!");
+					System.out.println("------- no solution found!!!!!");
 					response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 				}
 				else{
 					this.tigerCount--;
 				}
 			}
-
+			// if a tiger has been placed on a den previously, we want to prioritize placing tiles around it to get more points
 			else if(denPriority) {
 				ArrayList<PlacementPossibility> denPossibilities = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
 
@@ -229,7 +238,7 @@ public class Player {
 				System.out.println("*****DEN PRIORITY IS TRUE BABYYYYYYYY :)");
 
 				for(int i = 0; i < denPossibilities.size(); i++) {
-				// we itterate over the neighbors of where the den is placed and try to prioritize placing around it to maximize points
+				// we iterate over the neighbors of where the den is placed and try to prioritize placing around it to maximize points
 
 						// check if we can place it above at a location
 						int rowTest = denPossibilities.get(i).row;
@@ -261,6 +270,8 @@ public class Player {
 							response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
 							break;
 						}
+
+						/* This checks the corners of a den, but would only be used if those are possibilities */
 						// else if((this.denRow == rowTest+1) && (this.denColumn == columnTest+1) ){
 						// 	solutionFound = true;
 						// 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
@@ -279,8 +290,9 @@ public class Player {
 						// }
 
 				}
+					// if tile cant be placed around the den, place tile randomly in a valid position
 					if(!solutionFound){
-						System.out.println("-------no solution found!!!!!");
+						System.out.println("------- no solution found!!!!!");
 						response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 					}
 					else{
@@ -289,6 +301,7 @@ public class Player {
 
 				this.localVersionOfBoard.updateBoard(response);
 			}
+			// if not the first move, and none of the other conditions are met, place tile randomly in a valid spot
 			else {
 				System.out.println("INSIDE IF NUMBER 5");
 				 response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation,false,0,false, false, false, false, false, 0,0);
