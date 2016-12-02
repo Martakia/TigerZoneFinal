@@ -52,7 +52,6 @@ public class Player {
 
 		boolean trailPriority = false;
 		int trailCount = 0;
-		for(int i=0; i<4; i++){
 			if(cardToPlace.CardCode.charAt(0) == 'T'){
 				trailCount++;
 			}
@@ -68,11 +67,9 @@ public class Player {
 			if(trailCount >= 3){
 				trailPriority = true;
 			}
-		}
 
 		boolean oneLakePriority = false;
 		int lakeCount = 0;
-		for(int i=0; i<4; i++){
 			if(cardToPlace.CardCode.charAt(0) == 'L'){
 				lakeCount++;
 			}
@@ -88,7 +85,6 @@ public class Player {
 			if(lakeCount == 1){
 				oneLakePriority = true;
 			}
-		}
 
 		PlayerMoveInformation response = null;
 
