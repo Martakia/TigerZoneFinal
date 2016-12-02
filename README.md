@@ -12,7 +12,7 @@
   vpeixoto - Vanessa Peixoto
   
 
-# To Run TigerZone using an external server:
+## To Run TigerZone using an external server:
 
 ### compile the Player, Board, Game and main classes using:
 
