@@ -17,17 +17,17 @@
 
 #### COMPILE the client using:
 
-  'javac Card.java Coordinates.java RotatedIcon.java PlacementPossibility.java
-   PlayerMoveInformation.java TigerInformation.java Deck.java Log.java Board.java
-   Player.java Game.java main.java'
+>  'javac Card.java Coordinates.java RotatedIcon.java PlacementPossibility.java
+>   PlayerMoveInformation.java TigerInformation.java Deck.java Log.java Board.java
+>   Player.java Game.java main.java'
 
 #### OR just run the command:
 
-  'make'
+>  'make'
  
 #### RUN the Client using:
 
-  'java main < IP address > < port number> < tournament password > < username > < password >'
+>  'java main < IP address > < port number> < tournament password > < username > < password >'
   
   *using 'java main localhost 4444 a b c' and 'java GameServer 4444' on 2 different command prompts will allow you to test our internal server*
   
