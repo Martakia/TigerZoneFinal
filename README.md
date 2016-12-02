@@ -37,7 +37,7 @@
 
 >  javac ServerAuthProtocol.java
  
-#### RUN the Client using main in the original command prompt and th Server in the second command prompt:
+#### RUN the Client using main in the original command prompt and the Server in the second command prompt:
 
 >  java main localhost 4444 a b c
 
