@@ -6,18 +6,26 @@ import java.net.*;
 // Starting point for the game 
 public class main{
 
-	// this will connect to the host that Dave specifies the day of the competition, as well as the port 
-	 static String hostName; 
-	 static int portNumber;
-	 static String tournamentPassword;  
-	 static String username;
-	 static String password;
+      // dependency injection, startup configurations, select options, then compile to run at specified setting
+      static final boolean TURN_ON_GUI = false;
+      static final boolean DEBUG_MODE = false;
+      // If the AI playes AI with our practice server, the moves happen so quickly that it is hard to see what happens
+      // this pauses everything after each move for a certain period of time to see what is going on
+      static final int THREAD_SLEEP_TIME = 1000;
+
+
+  // this will connect to the host that Dave specifies the day of the competition, as well as the port 
+   static String hostName; 
+   static int portNumber;
+   static String tournamentPassword;  
+   static String username;
+   static String password;
 
 
        static public int startingX =0;
        static public int startingY =0;
 
-	public static void main(String args[]){
+  public static void main(String args[]){
 
             Log log = new Log("LogInfo.txt"); 
             log.LogInfo("this is working!"); 
@@ -28,7 +36,7 @@ public class main{
             username = args[3];
             password = args[4];
 
-		// In the main, the connection is established to the domain and port number specified
+    // In the main, the connection is established to the domain and port number specified
         try (
             Socket kkSocket = new Socket(hostName, portNumber);
             PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
@@ -49,139 +57,156 @@ public class main{
             String gidTwo = "";
 
             while ((fromServer = in.readLine()) != null) {
-            	// Each of the responses will be constructed using a stringBuilder
-            	StringBuilder response = new StringBuilder();
+              // Each of the responses will be constructed using a stringBuilder
+              StringBuilder response = new StringBuilder();
 
-            	// Split by whitespace to better parse information
-            	String[] serverInfo = fromServer.split("\\s+");
+              // Split by whitespace to better parse information
+              String[] serverInfo = fromServer.split("\\s+");
 
-            	// Incoming messages from the server are handled here 
+              // Incoming messages from the server are handled here 
                 System.out.println("Recieving Reponse: " + fromServer);
 
-                log.LogInfo("Recieving Response: " +fromServer);       
+                log.LogInfo("Recieving Response: " +fromServer); 
+
+                if(DEBUG_MODE){
+                  try{
+                        Thread.sleep(THREAD_SLEEP_TIME);
+                  }catch(Exception e){
+                        e.printStackTrace();
+                  }
+                }      
 // DONE
                 // Handle each of the Server Responses
-	                if (fromServer.equals("THIS IS SPARTA!")){ 
-	                	System.out.println("	=== Giving Tournament Password ===");
-	                	// need to give the password
-		                	response.append("JOIN ");
-		                	response.append(tournamentPassword);
-		                	fromUser = response.toString();
-	                }
-                  	else if(fromServer.equals("HELLO!")){
-                  		System.out.println("	=== Giving authentication credentials ===");
-                  		// need to give authentication response
-	                  		response.append("I AM ");
-	                  		response.append(username + " " + password);
-	                  		fromUser = response.toString();
-                  	}
-                  	else if (serverInfo[0].equals("WELCOME")){
-                  		System.out.println("	=== Sucesfull Authentication ===");
-                  		// we have been sucesfully authenticated, YAY! 		
-                  	}
-                  	else if (serverInfo[0].equals("NEW") && serverInfo[1].equals("CHALLENGE")){
-                  		if(serverInfo[7].equals("MATCH")){
-                  			System.out.println("	=== NEW single match ===");
-                  			// one match
-                  			numberOfRounds = Integer.parseInt(serverInfo[6]);
-                  		} 
-                  		else{
-                  			System.out.println("	=== Multiple new matches ===");
-                  			// MATCHES, multiple matches
-                  			numberOfRounds = Integer.parseInt(serverInfo[6]);
-                  		}
-                  	}
-                  	else if(serverInfo[0].equals("BEGIN")){
-                  		System.out.println("	=== Starting new round ===");
-                  		// begin round, we want to initialize 2 games 
-	                  		Game gameOne = new Game("GAME #1");
-	                  		Game gameTwo = new Game("GAME #2");
-	                  		games[0] = gameOne;
-	                  		games[1] = gameTwo;
-	                  	
-	                  	// reset booleans, keep track of gid at the very start of the game
-	             			firstMoveMade = false;
-	             			secondMoveMade = false;
-                  	}
-                  	else if(serverInfo[0].equals("YOUR") && serverInfo[1].equals("OPPONENT")){
-                  		System.out.println("	=== Opponent Player info ===");
-                  		// opponent player information
-                  		opponent = serverInfo[4];
-                  	}
-                  	else if(serverInfo[0].equals("STARTING")){
-                  		System.out.println("	=== Starting tile information ===");
-                  		// starting tile information
-                  			String cardCode = serverInfo[3];
-                  			int xLocation = Integer.parseInt(serverInfo[5]);
-                  			int yLocation = Integer.parseInt(serverInfo[6]);
-                  			int rotation = (Integer.parseInt(serverInfo[7]))/90;
+                  if (fromServer.equals("THIS IS SPARTA!")){ 
+                    System.out.println("  === Giving Tournament Password ===");
+                    // need to give the password
+                      response.append("JOIN ");
+                      response.append(tournamentPassword);
+                      fromUser = response.toString();
+                  }
+                    else if(fromServer.equals("HELLO!")){
+                      System.out.println("  === Giving authentication credentials ===");
+                      // need to give authentication response
+                        response.append("I AM ");
+                        response.append(username + " " + password);
+                        fromUser = response.toString();
+                    }
+                    else if (serverInfo[0].equals("WELCOME")){
+                      System.out.println("  === Sucesfull Authentication ===");
+                      // we have been sucesfully authenticated, YAY!    
+                    }
+                    else if (serverInfo[0].equals("NEW") && serverInfo[1].equals("CHALLENGE")){
+                      if(serverInfo[7].equals("MATCH")){
+                        System.out.println("  === NEW single match ===");
+                        // one match
+                        numberOfRounds = Integer.parseInt(serverInfo[6]);
+                      } 
+                      else{
+                        System.out.println("  === Multiple new matches ===");
+                        // MATCHES, multiple matches
+                        numberOfRounds = Integer.parseInt(serverInfo[6]);
+                      }
+                    }
+                    else if(serverInfo[0].equals("BEGIN")){
+                      System.out.println("  === Starting new round ===");
+                      // begin round, we want to initialize 2 games 
+                        Game gameOne = new Game("GAME #1");
+                        Game gameTwo = new Game("GAME #2");
+                        games[0] = gameOne;
+                        games[1] = gameTwo;
+                      
+                      // reset booleans, keep track of gid at the very start of the game
+                    firstMoveMade = false;
+                    secondMoveMade = false;
+                    }
+                    else if(serverInfo[0].equals("YOUR") && serverInfo[1].equals("OPPONENT")){
+                      System.out.println("  === Opponent Player info ===");
+                      // opponent player information
+                      opponent = serverInfo[4];
+                    }
+                    else if(serverInfo[0].equals("STARTING")){
+                      System.out.println("  === Starting tile information ===");
+                      // starting tile information
+                        String cardCode = serverInfo[3];
+                        int xLocation = Integer.parseInt(serverInfo[5]);
+                        int yLocation = Integer.parseInt(serverInfo[6]);
+                        int rotation = (Integer.parseInt(serverInfo[7]))/90;
 
                                     startingX = xLocation;  
                                     startingY = yLocation;
 
-                  		// place the first tile on the board
-                  		games[0].board.placeFirstCard(cardCode, 0, 0, rotation);
-                  		games[1].board.placeFirstCard(cardCode, 0, 0, rotation);
-                  		
-                  	}
-                  	else if(serverInfo[0].equals("THE") && serverInfo[1].equals("REMAINING")){
-                  		System.out.println("	=== Creating deck ===");
-                  		// remaining tile information
-                  			int numberOfCards = Integer.parseInt(serverInfo[2]);
-                  			ArrayList<Card> rawCardData = new ArrayList<Card>();
-                  			for(int i=6; i<6+numberOfCards; i++){
-                  				String cardData = serverInfo[i];
-                  				Card card = new Card(cardData);
-                  				rawCardData.add(card);
-                  			}
-                  		// Give copies of both of the decks to both of the games 
-                  		games[0].deck.ImportCardData(rawCardData);
-                  		games[1].deck.ImportCardData(rawCardData);
-                  		
-                  		// give copies of boards to each player
-                  		games[0].player.giveBoardToPlayer(games[0].board);
-                  		games[1].player.giveBoardToPlayer(games[1].board);
-                  		
-                  		// give copies of the decks to both the players
-                  		games[0].player.giveDeckToPlayer(rawCardData);
-                  		games[1].player.giveDeckToPlayer(rawCardData);
-                  	}
-             		else if(serverInfo[0].equals("MATCH") && serverInfo[1].equals("BEGINS")){
-             			System.out.println("	=== Coutdown to start of match ===");
-             			// match begins in specified time frame
-             			
-             		}
-             		else if(serverInfo[0].equals("MAKE") && serverInfo[1].equals("YOUR")){
+                      // place the first tile on the board
+                      games[0].board.placeFirstCard(cardCode, 0, 0, rotation);
+                      games[1].board.placeFirstCard(cardCode, 0, 0, rotation);
+
+                              // display boards
+                              if(TURN_ON_GUI){
+                                    games[0].run();
+                                    games[1].run();
+                              } 
+                    }
+                    else if(serverInfo[0].equals("THE") && serverInfo[1].equals("REMAINING")){
+                      System.out.println("  === Creating deck ===");
+                      // remaining tile information
+                        int numberOfCards = Integer.parseInt(serverInfo[2]);
+                        ArrayList<Card> rawCardData = new ArrayList<Card>();
+                        for(int i=6; i<6+numberOfCards; i++){
+                          String cardData = serverInfo[i];
+                          Card card = new Card(cardData);
+                          rawCardData.add(card);
+                        }
+                      // Give copies of both of the decks to both of the games 
+                      games[0].deck.ImportCardData(rawCardData);
+                      games[1].deck.ImportCardData(rawCardData);
+                      
+                      // give copies of boards to each player
+                      games[0].player.giveBoardToPlayer(games[0].board);
+                      games[1].player.giveBoardToPlayer(games[1].board);
+                      
+                      // give copies of the decks to both the players
+                      games[0].player.giveDeckToPlayer(rawCardData);
+                      games[1].player.giveDeckToPlayer(rawCardData);
+                    }
+                else if(serverInfo[0].equals("MATCH") && serverInfo[1].equals("BEGINS")){
+                  System.out.println("  === Coutdown to start of match ===");
+                  // match begins in specified time frame
+                  
+                }
+                else if(serverInfo[0].equals("MAKE") && serverInfo[1].equals("YOUR")){
 // MAKING A MOVE
-             				System.out.println("	=== Make move ===");
-             				// move with singular amount of time
-             				String gameID = serverInfo[5];
-             				if(!firstMoveMade && !secondMoveMade){
-             					// called only at the start when we don't know the gid
-             					firstMoveMade = true;
-             					gidOne = gameID;
+                              if(TURN_ON_GUI){
+                                    games[0].update();
+                                    games[1].update();
+                              }
+                    System.out.println("  === Make move ===");
+                    // move with singular amount of time
+                    String gameID = serverInfo[5];
+                    if(!firstMoveMade && !secondMoveMade){
+                      // called only at the start when we don't know the gid
+                      firstMoveMade = true;
+                      gidOne = gameID;
                                           System.out.println("GAME ID 1 " +gidOne);
-             				} else if (!secondMoveMade){
-             					// called only when we have to make the second move
-             					secondMoveMade = true;
-             					gidTwo = gameID;
+                    } else if (!secondMoveMade){
+                      // called only when we have to make the second move
+                      secondMoveMade = true;
+                      gidTwo = gameID;
                                            System.out.println("GAME ID 2 " +gidTwo);
-             				} else {
-             					// not one of the first 2 moves
-             				}
-		             					PlayerMoveInformation info;
-		             					Card cardToPlace = new Card(serverInfo[12]);
-		             					
-		             					if(gameID.equals(gidOne)){
-		             						// make move for first game
-		             						info = games[0].player.makeMove(cardToPlace);
-		             					}
-		             					else {
-		             						// make move for second game
-		             						info = games[1].player.makeMove(cardToPlace);
-		             					}
-		             					// 
-		             					int subtract = (games[0].board.boardColumnNumber/2);
+                    } else {
+                      // not one of the first 2 moves
+                    }
+                          PlayerMoveInformation info;
+                          Card cardToPlace = new Card(serverInfo[12]);
+                          
+                          if(gameID.equals(gidOne)){
+                            // make move for first game
+                            info = games[0].player.makeMove(cardToPlace);
+                          }
+                          else {
+                            // make move for second game
+                            info = games[1].player.makeMove(cardToPlace);
+                          }
+                          // 
+                          int subtract = (games[0].board.boardColumnNumber/2);
 
                                                       if(info.unplaceable){
                                                             // generate responses
@@ -210,17 +235,24 @@ public class main{
                                                             else{
                                                                   response.append(" NONE");
                                                             }
-                                                      }		
-		             					fromUser = response.toString();
-             				
-             		}
+                                                      }   
+                          fromUser = response.toString();
+                    
+                }
 // RESPONDING TO MOVE INFORMATION
-             		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("MOVE")){
-             			if(serverInfo[6].equals("FORFEITED:")){
-             				System.out.println("	=== Forfiet game ===");
-             				// forfeit 
-             			} 
-             			else {
+                else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("MOVE")){
+
+                              // Update GUI if you want to display
+                              if(TURN_ON_GUI){
+                                    games[0].update();
+                                    games[1].update();
+                              }
+
+                  if(serverInfo[6].equals("FORFEITED:")){
+                    System.out.println("  === Forfiet game ===");
+                    // forfeit 
+                  } 
+                  else {
                                     if(serverInfo[6].equals("TILE")){
                                           // TILE response
                                           if(serverInfo[9].equals("PASSED")){
@@ -307,58 +339,74 @@ public class main{
                                                             games[1].board.udpateBoardFromServerResponse(updateInfo);
                                                       }     
                                     }
-             			}
-             		}
+                  }
+                }
 // DONE
-             		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("OVER")){
-             			System.out.println("	=== Game is over ===");
+                else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("OVER")){
+                  System.out.println("  === Game is over ===");
                               gidOne = "";
                               gidTwo = "";
-                              games[0].display();
-                              games[1].display();
+                  // game over
 
-                              games[0].stop();
-                              games[1].stop();
-             			// game over
-             		}
-             		else if(serverInfo[0].equals("END") && serverInfo[1].equals("OF")){
-             			// end of round
-             			if(serverInfo.length > 7){
-             				System.out.println("	=== end of round, waiting for next match ===");
-             				// longer response with "PLEASE WAIT FOR NEXT MATCH"
-             			}
-             			else {
-             				System.out.println("	=== end of round ===");
-             				// shorter reponse, just END OF THE ROUND
-             			}
-             		}
+                              // in debugging mode, pause to see GUI at the end
+                              if(DEBUG_MODE){
+                                    try{
+                                          Thread.sleep(THREAD_SLEEP_TIME);
+                                    }catch(Exception e){
+                                          e.printStackTrace();
+                                    }
+                              }
+                              if(TURN_ON_GUI){
+                                    games[0].stop();
+                                    games[1].stop(); 
+                              }            
+
+                }
+                else if(serverInfo[0].equals("END") && serverInfo[1].equals("OF")){
+                  // end of round
+                  if(serverInfo.length > 7){
+                    System.out.println("  === end of round, waiting for next match ===");
+                    // longer response with "PLEASE WAIT FOR NEXT MATCH"
+                  }
+                  else {
+                    System.out.println("  === end of round ===");
+                    // shorter reponse, just END OF THE ROUND
+                  }
+                }
 // DONE
-             		else if(fromServer.equals("END OF CHALLENGES")){
-             			System.out.println("	=== End of Challenges ===");
-             			// end of challenges
-             		}
-             		else if(fromServer.equals("PLEASE WAIT FOR THE NEXT CHALLENGE TO BEGIN")){
-             			System.out.println("	=== Waiting for new challenge ===");
-             			// wait for next challenge
-             		}
-                  	else if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE")){
-                  		System.out.println("	=== GG ===");
-                  		// end of the game, terminate
-                  		break;
-                  	}
-                  	else{
-                  		// some unhandled case, this shouldn't happend
-                  		System.out.println("	##ERROR## Unhandled response");
-                  	}
+                else if(fromServer.equals("END OF CHALLENGES")){
+                  System.out.println("  === End of Challenges ===");
+                  // end of challenges
+                }
+                else if(fromServer.equals("PLEASE WAIT FOR THE NEXT CHALLENGE TO BEGIN")){
+                  System.out.println("  === Waiting for new challenge ===");
+                  // wait for next challenge
+                }
+                    else if (fromServer.equals("THANK YOU FOR PLAYING! GOODBYE")){
+                      System.out.println("  === GG ===");
+                      // end of the game, terminate
+                      break;
+                    }
+                    else{
+                      // some unhandled case, this shouldn't happend
+                      System.out.println("  ##ERROR## Unhandled response");
+                    }
 
-      		 // Send ------------------------------------------------------------------------------------------------- //
+           // Send ------------------------------------------------------------------------------------------------- //
                 if (fromUser != null) {
 
+                  /*
+                  try{
+                        Thread.sleep(100);
+                  } catch(Exception e){
+                  } */
+
                               System.out.println("Sending Response: " + fromUser);
+                              fromUser.trim();
                               out.println(fromUser);
                               log.LogInfo("SENDING: " +fromUser);
                               // after sending information, we clear fromUser
-                               fromUser = null;
+                              fromUser = null;
 
                 }
              // ------------------------------------------------------------------------------------------------------ //
@@ -373,6 +421,6 @@ public class main{
         }
 
 
-	}
+  }
 
 }

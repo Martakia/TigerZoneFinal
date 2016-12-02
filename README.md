@@ -9,7 +9,7 @@
   
   itismynamenow - George
   
-  vpeixoto - Vanessa Peixoto
+  vpeixoto1 - Vanessa Peixoto
   
 
 ## To Run TigerZone Client using a server:

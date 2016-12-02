@@ -380,6 +380,7 @@ public class Board {
 		// TODO implement, this is the response we get back from the server
 	}
 
+	// print board to console for debugging purposes
 	public void printBoard()
 	{
 		System.out.println("----------------");
