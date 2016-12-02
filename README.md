@@ -61,7 +61,7 @@
 
 ---
 
-## Testing:
+## Testing
 
 For acceptance testing, we tested our AI against the Server created by the Server Team. The information sent between the client and the server was loggend into files and checked for discrepancies. Each time the client is ran, the log is saves as LogFile.txt and overwrites any old log file, so it is important to backup any file you may want to save. Included is a folder of some of the log files that were created when testing the client and helping the server team debug their server. 
 
@@ -81,6 +81,8 @@ Left mouse click on placed card will output information about this tile as terra
 
 Testing Artifacts for the "TZ version with GUI but without TCP" consist of mainly snippets of command line feedback and images of bugs found from tile placements and tiger placements from when bugs existed. These images are found in the bugImages folder and are simply artifacts from old builds that included bugs, the current one for what is implemented in it should not have any bugs.
 
+---
+
 ## Version details and Differences
 
 The only issues with this version are that two games can be run simultaneously but only one can be rendered at a time and some redering artifacts are present due to thread synchronization issues. Otherwise the board the board that is presented is correct. Because this code was done mostly for testing purposes, it has memory leaks and may have some stability issues when run for a long time. 
@@ -89,10 +91,18 @@ The main thing we lack in this build that we were not able to implement/test was
 
 ---
 
-## User Stories:
+## User Stories
 
 We used Pivotal Tracker to write down our user stories and keep track of the progress done to complete them. A link to the Pivotal Tracker is [here](https://www.pivotaltracker.com/n/projects/1914539).
 
 ## Architecture/Design
 
 NOTE: All architecture/design related documentation can be found in the designDocs folder
+
+---
+
+## Version Control and Contribution Methods
+
+Github was used for version control between team members. However, due to merge conflicts and other small issues using GitHub, we used Slack as a means to send code between team members in order to avoid push/pull conflicts. A link to our Slack page is [here](https://cen3031proj.slack.com/messages). Using this method allowed us to freely send small updates in the code without having to push/pull in Github.
+
+Aside from Github, the team met up on multiple occasions and spent long nights working in the Dungeon to finalize small details for the project. Slack was mainly used for communication, with the occasional text messages and GroupMe messages. This allowed constant team communication and project updates.
