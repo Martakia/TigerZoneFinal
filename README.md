@@ -91,7 +91,7 @@ The main thing we lack in this build that we were not able to implement/test was
 
 ---
 
-## User Stories
+## User Stories / Progress Tracking
 
 We used Pivotal Tracker to write down our user stories and keep track of the progress done to complete them. A link to the Pivotal Tracker is [here](https://www.pivotaltracker.com/n/projects/1914539).
 
@@ -105,6 +105,6 @@ NOTE: All architecture/design related documentation can be found in the designDo
 
 ## Version Control and Contribution Methods
 
-Github was used for version control between team members. However, due to merge conflicts and other small issues using GitHub, we used Slack as a means to send code between team members in order to avoid push/pull conflicts. We decided that main code pushes would only be done from the **konradpabjan** account to avoid further issues throughout testing and development. A link to our Slack page is [here](https://cen3031proj.slack.com/messages). Using this method allowed us to freely send small updates in the code without having to push/pull in Github. We set up a Documents channel on the slack for design documents and any other documents the team used. In the General channel, we did all team communication as well as code sending/exchanges.
+Github was used for version control between team members. However, due to merge conflicts and other small issues using GitHub, we used Slack as a means to send code between team members in order to avoid push/pull conflicts. We decided that main code pushes would only be done from the **konradpabjan** account to avoid further issues throughout testing and development. Using this method allowed us to freely send small updates in the code without having to push/pull in Github. We set up a Documents channel on the slack for design documents and any other documents the team used. In the General channel, we did all team communication as well as code sending/exchanges.
 
 Aside from Github, the team met up on multiple occasions and spent long nights working in the Dungeon to finalize details for the project. Slack was mainly used for communication, with the occasional text messages and GroupMe messages. This allowed constant team communication and project updates.
