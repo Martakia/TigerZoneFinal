@@ -11,12 +11,14 @@ public class Player {
 	public int denRow, denColumn;	// location of the most recently placed den tile
 
 	final public int tigerLimit = 7;
+	private ArrayList<denTigerLocation> denLocations;
 	
 	Player()
 	{
 		firstMoveMade = false;
 		this.tigerCount = 8;
 		this.crocCount = 2;
+		denLocations = new ArrayList<denTigerLocation>();
 	}
 	
 	// Same deck and board is given to the Game class
@@ -48,6 +50,11 @@ public class Player {
 		System.out.println("if there is a den " + cardToPlace.den);
 		if(cardToPlace.den){
 			denOnCard = true;
+		}
+		if(denLocations.size() > 0){
+			this.denPriority = true;
+		} else {
+			this.denPriority = false;
 		}
 
 		boolean trailPriority = false;
@@ -89,38 +96,40 @@ public class Player {
 		// lets try to get back some tigers that are currently placed on dens
 		if(denPriority){
 			// check 8 spots around the den to see if they are filled, if so, tiger is given back to us
-			int neighborCount = 0;
-
-
-			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn+1]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn-1]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow][denColumn+1]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow][denColumn-1]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn+1]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn]){
-				neighborCount++;
-			}
-			if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn-1]){
-
-				neighborCount++;
-			}
-			// if 8, everything around the den is complete so we return tiger,
-			if(neighborCount == 8){
-				this.tigerCount++;
-				this.denPriority = false;
+			
+			for(int i=0; i<this.denLocations.size(); i++){
+						this.denRow = this.denLocations.get(i).row;
+						this.denColumn = this.denLocations.get(i).column;
+						int neighborCount = 0;
+						if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn+1]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow+1][denColumn-1]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow][denColumn+1]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow][denColumn-1]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn+1]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn]){
+							neighborCount++;
+						}
+						if(this.localVersionOfBoard.tileTracker[denRow-1][denColumn-1]){
+							neighborCount++;
+						}
+						// if 8, everything around the den is complete so we return tiger,
+						if(neighborCount == 8){
+							this.tigerCount++;
+							this.denLocations.remove(i);
+						}
 			}
 		}
 
@@ -155,11 +164,11 @@ public class Player {
 
 				// now update local version of board before sending out the response 
 				this.localVersionOfBoard.updateBoard(response);
+				denTigerLocation addMe = new denTigerLocation(stuff.get(random).row,stuff.get(random).column);
 
 				// now we want to prioritize placing a tiles around the tile that has the den 
-				this.denPriority = true;
-				this.denRow= stuff.get(random).row;
-				this.denColumn = stuff.get(random).column;
+				this.denLocations.add(addMe);
+
 			}
 			// if the card has a special character that is not a croc or den, place a crocodile one it to hopefully lessen the score of opponent
 			else if(((cardToPlace.deer || cardToPlace.boar || cardToPlace.buffalo) && cardToPlace.croc == false) && (this.crocCount > 0)) {
@@ -353,11 +362,11 @@ public class Player {
 
 				// use random tile placement if solution not found, otherwise decrease tiget count
 				if(!solutionFound){
-					System.out.println("------- prioritization will work for Trail");
+					System.out.println("------- prioritization not working for trail, reverting to random choice");
 					response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 				}
 				else{
-					System.out.println("POINTS FOR TRIAL !!!");
+					System.out.println("POINTS FOR TRAIL !!!");
 					this.tigerCount--;
 				}
 			}
@@ -370,60 +379,71 @@ public class Player {
 
 				boolean solutionFound = false;
 				System.out.println("*****DEN PRIORITY IS TRUE BABYYYYYYYY :)");
+				for(int j=0; j<denLocations.size(); j++){
+					if(solutionFound){
+						break;
+					}
 
-				for(int i = 0; i < denPossibilities.size(); i++) {
-				// we iterate over the neighbors of where the den is placed and try to prioritize placing around it to maximize points
+					this.denRow = denLocations.get(j).row;
+					this.denColumn = denLocations.get(j).column;
+						for(int i = 0; i < denPossibilities.size(); i++) {
+						// we iterate over the neighbors of where the den is placed and try to prioritize placing around it to maximize points
 
-						// check if we can place it above at a location
-						int rowTest = denPossibilities.get(i).row;
-						int columnTest = denPossibilities.get(i).column;
-						int orientationTest = denPossibilities.get(i).rotation;
+								// check if we can place it above at a location
+								int rowTest = denPossibilities.get(i).row;
+								int columnTest = denPossibilities.get(i).column;
+								int orientationTest = denPossibilities.get(i).rotation;
 
-						if((this.denRow == rowTest) && (this.denColumn == columnTest +1) ){
-							// check if can be placed to the left
-							solutionFound = true;
-							response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-							break;
+								if((this.denRow == rowTest) && (this.denColumn == columnTest +1) ){
+									// check if can be placed to the left
+									solutionFound = true;
+									response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+									break;
+								}
+								else if((this.denRow == rowTest) && (this.denColumn == columnTest -1 ) ){
+									// check if can be placed to the right
+									solutionFound = true;
+									response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+								    break;
+								} 
+								else if((this.denRow == rowTest-1) && (this.denColumn == columnTest) ){
+									// check if can be placed above
+									solutionFound = true;
+									response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+									break;
+								}
+
+								else if((this.denRow == rowTest+1) && (this.denColumn == columnTest) ){
+									// check if it can be placed below
+									solutionFound = true;
+									response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+									break;
+								}
+
+								// This checks the corners of a den, but would only be used if those are possibilities */
+								 else if((this.denRow == rowTest+1) && (this.denColumn == columnTest+1) ){
+								 	solutionFound = true;
+								 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+									break;
+								 }
+								 else if((this.denRow == rowTest-1) && (this.denColumn == columnTest-1) ){
+								 	solutionFound = true;
+								 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+								 	break;
+								 }
+								 else if((this.denRow == rowTest+1) && (this.denColumn == columnTest-1) ){
+								 	solutionFound = true;
+								 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+								 	break;
+								 }
+								 else if((this.denRow == rowTest-1) && (this.denColumn == columnTest+1) ){
+								 	solutionFound = true;
+								 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
+									break;
+								 }
+
 						}
-						else if((this.denRow == rowTest) && (this.denColumn == columnTest -1 ) ){
-							// check if can be placed to the right
-							solutionFound = true;
-							response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						    break;
-						} 
-						else if((this.denRow == rowTest-1) && (this.denColumn == columnTest) ){
-							// check if can be placed above
-							solutionFound = true;
-							response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-							break;
-						}
-
-						else if((this.denRow == rowTest+1) && (this.denColumn == columnTest) ){
-							// check if it can be placed below
-							solutionFound = true;
-							response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-							break;
-						}
-
-						// This checks the corners of a den, but would only be used if those are possibilities */
-						 else if((this.denRow == rowTest+1) && (this.denColumn == columnTest+1) ){
-						 	solutionFound = true;
-						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						 }
-						 else if((this.denRow == rowTest-1) && (this.denColumn == columnTest-1) ){
-						 	solutionFound = true;
-						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						 }
-						 else if((this.denRow == rowTest+1) && (this.denColumn == columnTest-1) ){
-						 	solutionFound = true;
-						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						 }
-						 else if((this.denRow == rowTest-1) && (this.denColumn == columnTest+1) ){
-						 	solutionFound = true;
-						 	response = new PlayerMoveInformation(cardToPlace, denPossibilities.get(i).row, denPossibilities.get(i).column, denPossibilities.get(i).rotation, false, 0, false, false, false, false, false, 0, 0);
-						 }
-
-				}
+					}
 					// if tile cant be placed around the den, place tile randomly in a valid position
 					if(!solutionFound){
 						System.out.println("------- no solution found!!!!!");
@@ -452,4 +472,14 @@ public class Player {
 		this.localVersionOfBoard = board;
 	}
 	
+}
+
+class denTigerLocation{
+	final int row;
+	final int column;
+	denTigerLocation(int row, int column){
+		this.row = row;
+		this.column = column;
+	}
+
 }
