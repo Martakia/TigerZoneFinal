@@ -1,4 +1,4 @@
-// logging for debug purposes
+
 import java.util.*;	
 import java.io.*;
 import java.sql.Timestamp;
@@ -21,7 +21,7 @@ public class Log {
 	public void LogInfo(String info){
 		try{
 			Date date= new java.util.Date();
-			writer.print("\r\n"+ new Timestamp(date.getTime()) + " | " +info);
+			writer.print("\r\n"+ new Timestamp(date.getTime()) +" | " +info);
 			writer.flush();
 		}
 		catch(Exception e){
