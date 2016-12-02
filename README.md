@@ -43,6 +43,8 @@
 
 >  java GameServer 4444
 
+---
+
 ## To run the TigerZone Client with a GUI:
 
 #### Change lines 10 and 11 inside main.java
