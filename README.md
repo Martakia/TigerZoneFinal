@@ -105,4 +105,4 @@ NOTE: All architecture/design related documentation can be found in the designDo
 
 Github was used for version control between team members. However, due to merge conflicts and other small issues using GitHub, we used Slack as a means to send code between team members in order to avoid push/pull conflicts. A link to our Slack page is [here](https://cen3031proj.slack.com/messages). Using this method allowed us to freely send small updates in the code without having to push/pull in Github.
 
-Aside from Github, the team met up on multiple occasions and spent long nights working in the Dungeon to finalize small details for the project. Slack was mainly used for communication, with the occasional text messages and GroupMe messages. This allowed constant team communication and project updates.
+Aside from Github, the team met up on multiple occasions and spent long nights working in the Dungeon to finalize details for the project. Slack was mainly used for communication, with the occasional text messages and GroupMe messages. This allowed constant team communication and project updates.
