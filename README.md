@@ -1,3 +1,17 @@
+# TigerZone - TeamR
+  Martakia - Arturo Bustamente
+  
+  mondily - Amanda Morales
+  
+  konradpabjan - Konrad Pabjan
+  
+  ana16 - Ana Jelacic
+  
+  itismynamenow - George
+  
+  vpeixoto - Vanessa Peixoto
+  
+
 # To Run TigerZone using an external server:
 
 ### compile the Player, Board, Game and main classes using:
