@@ -12,4 +12,5 @@ main.class: main.java
 clean:
 	rm Player.class
 	rm Board.class
+	rm Game.class
 	rm main.class
