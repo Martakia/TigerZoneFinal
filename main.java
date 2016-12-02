@@ -6,6 +6,14 @@ import java.net.*;
 // Starting point for the game 
 public class main{
 
+      // dependency injection, startup configurations, select options, then compile to run at specified setting
+      static final boolean TURN_ON_GUI = false;
+      static final boolean DEBUG_MODE = false;
+      // If the AI playes AI with our practice server, the moves happen so quickly that it is hard to see what happens
+      // this pauses everything after each move for a certain period of time to see what is going on
+      static final int THREAD_SLEEP_TIME = 1000;
+
+
 	// this will connect to the host that Dave specifies the day of the competition, as well as the port 
 	 static String hostName; 
 	 static int portNumber;
@@ -58,7 +66,15 @@ public class main{
             	// Incoming messages from the server are handled here 
                 System.out.println("Recieving Reponse: " + fromServer);
 
-                log.LogInfo("Recieving Response: " +fromServer);       
+                log.LogInfo("Recieving Response: " +fromServer); 
+
+                if(DEBUG_MODE){
+                  try{
+                        Thread.sleep(THREAD_SLEEP_TIME);
+                  }catch(Exception e){
+                        e.printStackTrace();
+                  }
+                }      
 // DONE
                 // Handle each of the Server Responses
 	                if (fromServer.equals("THIS IS SPARTA!")){ 
@@ -122,7 +138,12 @@ public class main{
                   		// place the first tile on the board
                   		games[0].board.placeFirstCard(cardCode, 0, 0, rotation);
                   		games[1].board.placeFirstCard(cardCode, 0, 0, rotation);
-                  		
+
+                              // display boards
+                              if(TURN_ON_GUI){
+                                    games[0].run();
+                                    games[1].run();
+                              }	
                   	}
                   	else if(serverInfo[0].equals("THE") && serverInfo[1].equals("REMAINING")){
                   		System.out.println("	=== Creating deck ===");
@@ -153,6 +174,10 @@ public class main{
              		}
              		else if(serverInfo[0].equals("MAKE") && serverInfo[1].equals("YOUR")){
 // MAKING A MOVE
+                              if(TURN_ON_GUI){
+                                    games[0].update();
+                                    games[1].update();
+                              }
              				System.out.println("	=== Make move ===");
              				// move with singular amount of time
              				String gameID = serverInfo[5];
@@ -216,6 +241,13 @@ public class main{
              		}
 // RESPONDING TO MOVE INFORMATION
              		else if(serverInfo[0].equals("GAME") && serverInfo[2].equals("MOVE")){
+
+                              // Update GUI if you want to display
+                              if(TURN_ON_GUI){
+                                    games[0].update();
+                                    games[1].update();
+                              }
+
              			if(serverInfo[6].equals("FORFEITED:")){
              				System.out.println("	=== Forfiet game ===");
              				// forfeit 
@@ -314,12 +346,21 @@ public class main{
              			System.out.println("	=== Game is over ===");
                               gidOne = "";
                               gidTwo = "";
-                              games[0].display();
-                              games[1].display();
-
-                              games[0].stop();
-                              games[1].stop();
              			// game over
+
+                              // in debugging mode, pause to see GUI at the end
+                              if(DEBUG_MODE){
+                                    try{
+                                          Thread.sleep(THREAD_SLEEP_TIME);
+                                    }catch(Exception e){
+                                          e.printStackTrace();
+                                    }
+                              }
+                              if(TURN_ON_GUI){
+                                    games[0].stop();
+                                    games[1].stop(); 
+                              }            
+
              		}
              		else if(serverInfo[0].equals("END") && serverInfo[1].equals("OF")){
              			// end of round
@@ -354,11 +395,19 @@ public class main{
       		 // Send ------------------------------------------------------------------------------------------------- //
                 if (fromUser != null) {
 
+                  /*
+                  try{
+                        Thread.sleep(100);
+                  } catch(Exception e){
+
+                  } */
+
                               System.out.println("Sending Response: " + fromUser);
+                              fromUser.trim();
                               out.println(fromUser);
                               log.LogInfo("SENDING: " +fromUser);
                               // after sending information, we clear fromUser
-                               fromUser = null;
+                              fromUser = null;
 
                 }
              // ------------------------------------------------------------------------------------------------------ //
