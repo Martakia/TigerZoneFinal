@@ -82,7 +82,7 @@ Left mouse click on placed card will output information about this tile as terra
 
 The only issues with this version are that two games can be run simultaneously but only one can be rendered at a time and some redering artifacts are present due to thread synchronization issues. Otherwise the board the board that is presented is correct. Because this code was done mostly for testing purposes, it has memory leaks and may have some stability issues when run for a long time. 
 
-The main thing we lack in this build that we were not able to implement/test was tracking scoring, which would have improved our AI's scoring. We were also unable to transfer the Tiger placement algorithms into the final build of the project without debugging it in time for turning in the project, but it can be found in the "TZ version with GUI but without TCP" version.
+The main thing we lack in this build that we were not able to implement/test was tracking scoring, which would have improved our AI's scoring. We were also unable to transfer the Tiger placement algorithms from the "TZ version with GUI but without TCP" buil into the final build of the project without debugging it in time for turning in the project, but it can be found in the "TZ version with GUI but without TCP" version. But because of our testing and knowledge of the algorithm, we were able to create conditions and checks that were proven to be tru by this algorithm in to the final build so that our AI does place tigers properly.
 
 ---
 
