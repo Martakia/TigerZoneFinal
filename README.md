@@ -12,16 +12,24 @@
   vpeixoto1 - Vanessa Peixoto
   
 
-## To Run TigerZone Client using a server:
+## To run the TigerZone Client using a server:
 
-#### compile the Player, Board, Game and main classes using:
+#### COMPILE the client using:
 
-  'javac Player.java Board.java Game.java main.java'
+  'javac Card.java Coordinates.java RotatedIcon.java PlacementPossibility.java
+   PlayerMoveInformation.java TigerInformation.java Deck.java Log.java Board.java
+   Player.java Game.java main.java'
 
 #### OR just run the command:
 
   'make'
  
-#### run the Client using:
+#### RUN the Client using:
 
   'java main < IP address > < port number> < username > < password >'
+
+
+
+## Acceptance Testing:
+
+For acceptance testing, we tested our AI (Player.java) against the Server created by the Server Team. The information sent between the client and the server was loggend into files and checked for discrepancies. Additionally, we set up a local server (localhost) in which we would generate a random deck of 6 tiles and our AI would play itself. With the output, we manually checked that everything was logically correct (meeple placement, tile placement, etc).
