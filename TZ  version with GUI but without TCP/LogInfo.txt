@@ -1,0 +1,2 @@
+2016-11-19 14:58:41.36 | Log file has been initialized
+2016-11-19 14:58:41.365 | this is working!

@@ -1,0 +1,130 @@
+//top, right, bottom, left, deer, boar, buffalo, den, lakesConnect, junglesConnect
+
+
+jungle, jungle, jungle, jungle, false, false, false, false, false, true, 1.png
+
+lake, lake, lake, lake, false, false, false, false, true, false, 2.png
+
+game-trail, lake, jungle, game-trail, false, false, false, false, false, false, 3.png
+
+game-trail, lake, game-trail, game-trail, false, false, false, false, false, false, 4.png
+
+jungle, jungle, jungle, jungle, false, false, false, true, false, true, 5.png
+jungle, jungle, jungle, jungle, false, false, false, true, false, true, 5.png
+jungle, jungle, jungle, jungle, false, false, false, true, false, true, 5.png
+jungle, jungle, jungle, jungle, false, false, false, true, false, true, 5.png
+
+jungle, lake, lake, lake, false, false, false, false, true, false, 6.png
+jungle, lake, lake, lake, false, false, false, false, true, false, 6.png
+jungle, lake, lake, lake, false, false, false, false, true, false, 6.png
+jungle, lake, lake, lake, false, false, false, false, true, false, 6.png
+
+game-trail, lake, jungle, game-trail, false, true, false, false, false, false, 7.png
+game-trail, lake, jungle, game-trail, false, true, false, false, false, false, 7.png
+
+game-trail, lake, game-trail, game-trail, false, true, false, false, false, false, 8.png
+game-trail, lake, game-trail, game-trail, false, true, false, false, false, false, 8.png
+
+jungle, jungle, game-trail, jungle, false, false, false, true, false, true, 9.png
+jungle, jungle, game-trail, jungle, false, false, false, true, false, true, 9.png
+
+lake, lake, jungle, jungle, false, false, false, false, true, true, 10.png
+lake, lake, jungle, jungle, false, false, false, false, true, true, 10.png
+lake, lake, jungle, jungle, false, false, false, false, true, true, 10.png
+lake, lake, jungle, jungle, false, false, false, false, true, true, 10.png
+lake, lake, jungle, jungle, false, false, false, false, true, true, 10.png
+
+jungle, lake, game-trail, game-trail, false, false, false, false, false, false, 11.png
+
+game-trail, lake, lake, game-trail, false, false, false, false, true, false, 12.png
+game-trail, lake, lake, game-trail, false, false, false, false, true, false, 12.png
+game-trail, lake, lake, game-trail, false, false, false, false, true, false, 12.png
+
+game-trail, game-trail, game-trail, game-trail, false, false, false, false, false, false, 13.png
+
+//LAKES CONNECT IN MIDDLE
+jungle, lake, jungle, lake, false, false, false, false, true, false, 14.png
+jungle, lake, jungle, lake, false, false, false, false, true, false, 14.png
+jungle, lake, jungle, lake, false, false, false, false, true, false, 14.png
+
+jungle, lake, game-trail, game-trail, false, false, true, false, false, false, 15.png
+jungle, lake, game-trail, game-trail, false, false, true, false, false, false, 15.png
+
+game-trail, lake, lake, game-trail, false, false, true, false, true, false, 16.png
+game-trail, lake, lake, game-trail, false, false, true, false, true, false, 16.png
+
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+game-trail, jungle, game-trail, jungle, false, false, false, false, false, false, 17.png
+
+//JUNGLES CONNECT IN MIDDLE
+lake, jungle, lake, jungle, false, false, false, false, false, true, 18.png
+lake, jungle, lake, jungle, false, false, false, false, false, true, 18.png
+lake, jungle, lake, jungle, false, false, false, false, false, true, 18.png
+
+//Center Tile + 2 
+// REMOVED STARTING TILE from IMPORT !!!! GAME CLASS MAKES THAT ON OWN, ISN'T GIVEN TO PLAYERS AT START
+game-trail, lake, game-trail, jungle, false, false, false, false, false, false, 19.png
+game-trail, lake, game-trail, jungle, false, false, false, false, false, false, 19.png
+
+lake, jungle, game-trail, jungle, false, false, false, false, false, false, 20.png
+
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+game-trail, jungle, jungle, game-trail, false, false, false, false, false, true, 21.png
+
+lake, jungle, jungle, jungle, false, false, false, false, false, true, 22.png
+lake, jungle, jungle, jungle, false, false, false, false, false, true, 22.png
+lake, jungle, jungle, jungle, false, false, false, false, false, true, 22.png
+lake, jungle, jungle, jungle, false, false, false, false, false, true, 22.png
+lake, jungle, jungle, jungle, false, false, false, false, false, true, 22.png
+
+//deer is on right lake, jungle, and road?
+game-trail, lake, game-trail, jungle, true, false, false, false, false, false, 23.png
+game-trail, lake, game-trail, jungle, true, false, false, false, false, false, 23.png
+
+//deer is on lake, left jungle, and trail
+lake, jungle, game-trail, jungle, true, false, false, false, false, false, 24.png
+lake, jungle, game-trail, jungle, true, false, false, false, false, false, 24.png
+
+game-trail, jungle, game-trail, game-trail, false, false, false, false, false, false, 25.png
+game-trail, jungle, game-trail, game-trail, false, false, false, false, false, false, 25.png
+game-trail, jungle, game-trail, game-trail, false, false, false, false, false, false, 25.png
+game-trail, jungle, game-trail, game-trail, false, false, false, false, false, false, 25.png
+
+//lakes don’t connect on right and bottom
+jungle, lake, lake, jungle, false, false, false, false, false, true, 26.png
+jungle, lake, lake, jungle, false, false, false, false, false, true, 26.png
+
+//3 lakes connect
+game-trail, lake, lake, lake, false, false, false, false, true, false, 27.png
+game-trail, lake, lake, lake, false, false, false, false, true, false, 27.png
+game-trail, lake, lake, lake, false, false, false, false, true, false, 27.png
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
