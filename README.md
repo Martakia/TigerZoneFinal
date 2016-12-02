@@ -62,3 +62,9 @@
 ## Acceptance Testing:
 
 For acceptance testing, we tested our AI (Player.java) against the Server created by the Server Team. The information sent between the client and the server was loggend into files and checked for discrepancies. Additionally, we set up a local server (localhost) in which we would generate a random deck of 6 tiles and our AI would play itself. With the output, we manually checked that everything was logically correct (meeple placement, tile placement, etc).
+
+---
+
+## User Stories:
+
+We used Pivotal Tracker to write down our user stories and keep track of the progress done to complete them. A link to the Pivotal Tracker is [here](https://www.pivotaltracker.com/n/projects/1914539).
