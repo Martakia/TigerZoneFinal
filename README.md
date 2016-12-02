@@ -95,6 +95,8 @@ The main thing we lack in this build that we were not able to implement/test was
 
 We used Pivotal Tracker to write down our user stories and keep track of the progress done to complete them. A link to the Pivotal Tracker is [here](https://www.pivotaltracker.com/n/projects/1914539).
 
+---
+
 ## Architecture/Design
 
 NOTE: All architecture/design related documentation can be found in the designDocs folder
