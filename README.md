@@ -70,10 +70,15 @@ Additionally, we set up a local mock server called GameServer.java (localhost) i
 Additionally the version of the game located in the folder named "TZ version with GUI but without TCP" is an earlier build which was used for debugging new methods and algorithms, and has a different GUI that a user can interact with to play the game, or have AIs play the game. This is expanded further in the "TZ version with GUI but without TCP" section. This project is buildable in eclipse using the  "using project from filesystem" option. The key commands are as followed:
 
 R - rotates card
+
 C - allows to skip tiger placement
+
 W, A, S, D - move viewport
+
 Left mouse click to plave card.
+
 Left mouse click on placed card will output information about this tile as terrain types 3 by 3 matrix that indicates which tile sector is owned by which player and some other more specific debug data.
+
 
 The only issues with this version are that two games can be run simultaneously but only one can be rendered at a time and some redering artifacts are present due to thread synchronization issues. Otherwise the board the board that is presented is correct. Because this code was done mostly for testing purposes, it has memory leaks and may have some stability issues when run for a long time. 
 
