@@ -278,12 +278,13 @@ public class Board {
 		ArrayList<Integer> possibilities = new ArrayList<Integer>();
 
 		// TODO copy over code to find possible TigerPlacements 
-
+		// NOTE unable to correctly transfer code over to work with Protocol
 
 		return possibilities;
 	}
 	
 
+	// update local board with our move information to keep track of everything on board
 	public void updateBoard(PlayerMoveInformation response){
 		// when player makes move, coordinates are already 0-155 so no need to add 77 to each one to get middle index
 		boolean northNeighbor = false;
@@ -322,6 +323,7 @@ public class Board {
 		
 	}
 	
+	// update board with opponent move information
 	public void udpateBoardFromServerResponse(ServerMoveValidationResponse response){
 
 		// responses come back 0 indexed while our board 0 is represented by 77 

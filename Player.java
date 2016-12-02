@@ -3,12 +3,12 @@ public class Player {
 	
 	public Board localVersionOfBoard;
 	public ArrayList<Card> localVersionOfDeck;
-	boolean firstMoveMade;
-	public int tigerCount;
-	public int crocCount;
+	boolean firstMoveMade;			// if the first move of the game has been made
+	public int tigerCount;			// keep track of our tigers
+	public int crocCount;			// keep track of our crocodiles
 
 	public boolean denPriority;		// used for when a tile has a den
-	public int denRow, denColumn;
+	public int denRow, denColumn;	// location of the most recently placed den tile
 
 	final public int tigerLimit = 7;
 	

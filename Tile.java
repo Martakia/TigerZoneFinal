@@ -69,8 +69,8 @@ public class Tile extends Card {
 		 return super.CardCode;
 	}
 
-	
-	void generateMeepleSlots()//modifies meepleSlots after card placement and generates section of the 3x3 array like in the rules
+	//modifies meepleSlots after card placement and generates section of the 3x3 array like in the rules
+	void generateMeepleSlots()
 	{
 		int jungleCount = 0;
 		int lakeCount = 0;
@@ -168,7 +168,6 @@ public class Tile extends Card {
 		//handle slots for lake
 		if(super.lakesConnected){
 			if(lakeCount>0){
-				
 				 
 				if((super.terrainOnSide.up.equals("lake") && super.terrainOnSide.bottom.equals("lake")) || (super.terrainOnSide.left.equals("lake") && super.terrainOnSide.right.equals("lake"))){
 					this.terrainSections[4] = "lake";
@@ -198,7 +197,6 @@ public class Tile extends Card {
 					//check for connected lakes that are accross from each other
 					if((super.terrainOnSide.up.equals("lake")&&super.terrainOnSide.bottom.equals("lake"))||(super.terrainOnSide.left.equals("lake")&&super.terrainOnSide.right.equals("lake"))){
 						
-						
 						this.terrainSections[4] = "lake";
 					}
 					//otherwise it is two lakes that cut through the tile diagonally and only 1 jungle exists
@@ -211,20 +209,19 @@ public class Tile extends Card {
 			
 			
 		}
-		
+		//handle special case of lakes not connected with jungle in between
 		else{
-			if(lakeCount == 2){
+			if(lakeCount == 2){	
+
+				boolean sideUp = super.terrainOnSide.up.equals("lake");
+				boolean sideBottom = super.terrainOnSide.bottom.equals("lake");
+				boolean sideRight = super.terrainOnSide.right.equals("lake");
+				boolean sideLeft = super.terrainOnSide.left.equals("lake");
 				
-				
-				if((super.terrainOnSide.up.equals("lake")&&super.terrainOnSide.bottom.equals("lake"))||(super.terrainOnSide.left.equals("lake")&&super.terrainOnSide.right.equals("lake"))){
-					
-					
+				if( (sideUp && sideBottom) || (sideLeft && sideRight) ){
 					this.terrainSections[4] = "jungle";
 				}
 			}
-			
-			
-			
 			
 		}
 		
@@ -305,14 +302,12 @@ public class Tile extends Card {
 			this.terrainSections[6] = "jungle";
 		}
 
-
-		
 		
 		//most of the center cases were also taken care of, only one that needs to be done if it is an intersection and it needs to be assigned end-trail or if it is a jungle when all 4 sides are jungle
-		if(((super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.right.equals("game-trail"))  || 
+		if( ((super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.right.equals("game-trail"))  || 
 		   (super.terrainOnSide.bottom.equals("game-trail") && super.terrainOnSide.right.equals("game-trail")) ||
 		   (super.terrainOnSide.bottom.equals("game-trail") && super.terrainOnSide.left.equals("game-trail")) ||
-		   (super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.left.equals("game-trail"))) && gameTrailCount == 2)
+		   (super.terrainOnSide.up.equals("game-trail") && super.terrainOnSide.left.equals("game-trail")) ) && gameTrailCount == 2)
 		{
 			this.terrainSections[4] = "game-trail";
 		}

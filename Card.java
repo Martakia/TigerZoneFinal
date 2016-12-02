@@ -18,6 +18,7 @@ public class Card{
 	public String imagePath;//path to png files
 
 
+	// create card object from original input string
 	Card(String string){
 		
 		this.CardCode = string;
@@ -166,6 +167,7 @@ public class Card{
 		}
 	}
 	
+	// create card object with all terrain and animal properties
 	Card(String terrainUp, String terrainRight, String terrainBottom, String terrainLeft, 
 			boolean deer, boolean boar, boolean buffalo,boolean den, boolean lakesConnected,boolean junglesConnected)
 		{
@@ -268,6 +270,8 @@ public class Card{
 
 }
 
+// sets terrain type for each side of a tile
+// strings used: jungle, lake, game-trail
 class TerrainOnSide{
 		String up;
 		String right;

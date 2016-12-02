@@ -1,4 +1,4 @@
-
+// logging for debug purposes
 import java.util.*;	
 import java.io.*;
 import java.sql.Timestamp;
