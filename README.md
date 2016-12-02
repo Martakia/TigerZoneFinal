@@ -67,7 +67,7 @@ For acceptance testing, we tested our AI against the Server created by the Serve
 
 Additionally, we set up a local mock server called GameServer.java (localhost) in which we would generate a random deck of 6 tiles and our AI would play itself. With the output, we manually checked that everything was logically correct (meeple placement, tile placement, etc). To run this test, follow the directions under the section "To run the TigerZone Client using localhost server (Testing & Debugging)"; which is further up this page.
 
-Additionally the version of the game located in the folder named "TZ version with GUI but without TCP" is an earlier build which was used for debugging new methods and algorithms, and has a different GUI that a user can interact with to play the game, or have AIs play the game. This is expanded further in the "TZ version with GUI but without TCP" section. This project is buildable in eclipse using the  "using project from filesystem" option. The key commands are as followed:
+Additionally the version of the game located in the folder named "TZ version with GUI but without TCP" is an earlier build which was used for debugging new methods and algorithms, and has a different GUI that a user can interact with to play the game, or have AIs play the game. This is expanded further in the "TZ version with GUI but without TCP" section. This project is buildable in eclipse using the  "using project from filesystem" option. Compiling each class with javac in commandline and run it through there, but this was found to only work when the project was downloaded as a zip folder. The key commands are as followed:
 
 R - rotates card
 
@@ -79,6 +79,9 @@ Left mouse click to plave card.
 
 Left mouse click on placed card will output information about this tile as terrain types 3 by 3 matrix that indicates which tile sector is owned by which player and some other more specific debug data.
 
+Testing Artifacts for the "TZ version with GUI but without TCP" consist of mainly snippets of command line feedback and images of bugs found from tile placements and tiger placements from when bugs existed. These images are found in the bugImages folder.
+
+## Version details and Differences
 
 The only issues with this version are that two games can be run simultaneously but only one can be rendered at a time and some redering artifacts are present due to thread synchronization issues. Otherwise the board the board that is presented is correct. Because this code was done mostly for testing purposes, it has memory leaks and may have some stability issues when run for a long time. 
 
