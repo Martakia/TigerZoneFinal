@@ -227,9 +227,109 @@ public class Player {
 					response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
 				}
 				else{
+					System.out.println("POINTS FOR LAKE!!");
 					this.tigerCount--;
 				}
 			}
+
+			// prioritizes placing a tiger on a trail that is not connected 
+			else if(trailPriority && (tigerCount >0)){
+
+				boolean solutionFound = false;
+
+				for(int i=0; i<stuff.size(); i++){
+
+					boolean north = this.localVersionOfBoard.tileTracker[stuff.get(i).row+1][stuff.get(i).column];
+					boolean east = 	this.localVersionOfBoard.tileTracker[stuff.get(i).row][stuff.get(i).column+1];
+					boolean south = this.localVersionOfBoard.tileTracker[stuff.get(i).row-1][stuff.get(i).column];
+					boolean west = this.localVersionOfBoard.tileTracker[stuff.get(i).row][stuff.get(i).column-1];
+					// check north location
+					if(cardToPlace.CardCode.charAt(0) == 'T' && !north && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'T' && !north && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'T' && !north && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'T' && !north && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 2, false, false, false, false, false, 0, 0);
+					}
+					// check west location
+					else if(cardToPlace.CardCode.charAt(0) == 'T' && !west && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'T' && !west && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'T' && !west && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'T' && !west && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 4, false, false, false, false, false, 0, 0);
+					}
+					// check south location
+					else if(cardToPlace.CardCode.charAt(0) == 'T' && !south && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'T' && !south && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'T' && !south && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'T' && !south && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 8, false, false, false, false, false, 0, 0);
+					}
+					// check west location
+					else if(cardToPlace.CardCode.charAt(0) == 'T' && !east && stuff.get(i).rotation == 3){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(1) == 'T' && !east && stuff.get(i).rotation == 0){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(2) == 'T' && !east && stuff.get(i).rotation == 1){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else if (cardToPlace.CardCode.charAt(3) == 'T' && !east && stuff.get(i).rotation == 2){
+						solutionFound = true;
+						response = new PlayerMoveInformation(cardToPlace, stuff.get(i).row, stuff.get(i).column, stuff.get(i).rotation, true, 6, false, false, false, false, false, 0, 0);
+					}
+					else{
+						solutionFound = false;
+					}
+
+				}
+
+				// use random tile placement if solution not found, otherwise decrease tiget count
+				if(!solutionFound){
+					System.out.println("------- prioritization will work for Trail");
+					response = new PlayerMoveInformation(cardToPlace, stuff.get(random).row, stuff.get(random).column, stuff.get(random).rotation, false, 0, false, false, false, false, false, 0, 0);
+				}
+				else{
+					System.out.println("POINTS FOR TRIAL !!!");
+					this.tigerCount--;
+				}
+			}
+
+
+
 			// if a tiger has been placed on a den previously, we want to prioritize placing tiles around it to get more points
 			else if(denPriority) {
 				ArrayList<PlacementPossibility> denPossibilities = this.localVersionOfBoard.generatePossibleCardPlacements(cardToPlace);
