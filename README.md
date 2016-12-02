@@ -61,7 +61,7 @@
 
 ---
 
-## Acceptance Testing:
+## Testing:
 
 For acceptance testing, we tested our AI against the Server created by the Server Team. The information sent between the client and the server was loggend into files and checked for discrepancies. Each time the client is ran, the log is saves as LogFile.txt and overwrites any old log file, so it is important to backup any file you may want to save. Included is a folder of some of the log files that were created when testing the client and helping the server team debug their server. 
 
