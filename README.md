@@ -53,7 +53,7 @@
   
 #### Then follow the same instructions as listed above ^
   
-  *WARNING: The GUI will appear distorted unless it runs at a very high resolution.*
+  *WARNING: The GUI will appear distorted unless it runs with a very high resolution.*
 
 ---
 
