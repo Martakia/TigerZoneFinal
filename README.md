@@ -14,10 +14,14 @@
 
 ## To Run TigerZone Client using a server:
 
-### compile the Player, Board, Game and main classes using:
+#### compile the Player, Board, Game and main classes using:
 
-  javac Player.java Board.java Game.java main.java
-  
-### run using:
+  'javac Player.java Board.java Game.java main.java'
 
-  java main < IP address > < port number> < username > < password >
+#### OR just run the command
+
+  'make'
+ 
+#### run the Client using:
+
+  'java main < IP address > < port number> < username > < password >'
