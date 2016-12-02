@@ -79,7 +79,7 @@ Left mouse click to plave card.
 
 Left mouse click on placed card will output information about this tile as terrain types 3 by 3 matrix that indicates which tile sector is owned by which player and some other more specific debug data.
 
-Testing Artifacts for the "TZ version with GUI but without TCP" consist of mainly snippets of command line feedback and images of bugs found from tile placements and tiger placements from when bugs existed. These images are found in the bugImages folder.
+Testing Artifacts for the "TZ version with GUI but without TCP" consist of mainly snippets of command line feedback and images of bugs found from tile placements and tiger placements from when bugs existed. These images are found in the bugImages folder and are simply artifacts from old builds that included bugs, the current one for what is implemented in it should not have any bugs.
 
 ## Version details and Differences
 
