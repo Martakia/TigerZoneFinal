@@ -1,5 +1,5 @@
 # TigerZone - CEN3031 - TeamR
-  **Martakia** - Arturo Bustamente
+  **Martakia** - Arturo Bustamante
   
   **mondily** - Amanda Morales
   
