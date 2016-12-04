@@ -7,7 +7,7 @@
   
   **ana16** - Ana Jelacic
   
-  **itismynamenow** - George
+  **itismynamenow** - Giorgio Chkhaidze
   
   **vpeixoto1** - Vanessa Peixoto
   
